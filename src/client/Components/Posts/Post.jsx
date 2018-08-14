@@ -25,7 +25,7 @@ export default class Post extends React.Component {
         fetch(url)
           .then(apiResponse => apiResponse.json())
           .then(apiData => {
-              console.log(apiData.options)
+            //   console.log(apiData.options)
               this.setState( {post: apiData.post, options: apiData.options, hasPerformedAjax: true} )
           });
     }

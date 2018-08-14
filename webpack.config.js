@@ -51,7 +51,7 @@ module.exports = {
       new webpack.HotModuleReplacementPlugin()],
     devServer: {
         historyApiFallback: {
-            index:'/'
+            index:'/app'
         },
         hot: true
     }

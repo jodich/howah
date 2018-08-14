@@ -60,6 +60,7 @@ export default class App extends React.Component {
                     {/* Private Routes */}
                     <Route path='/app/profile' render={()=><ProfilePage loggedIn={loggedIn} user={user} />} />
                     <Route path='/app/new-post' render={()=><NewPostForm loggedIn={loggedIn} user={user} />} />
+                    <Redirect from="/" to="/app"/>
                 </Switch>
             </main>,
             

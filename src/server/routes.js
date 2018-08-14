@@ -15,7 +15,6 @@ module.exports = (app) => {
     
     app.get('/api/posts', controllers.selectPosts);
 
-    app.post('/api/submit-new-post', controllers.postNewPost)
-
+    app.post('/api/submit-new-post', controllers.postNewPost);
 
 }

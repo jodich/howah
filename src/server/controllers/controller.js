@@ -35,7 +35,9 @@ const selectSpecificPost = (req, res) => {
 }
 
 const postNewPost = (req, res) => {
-    let { title, question, time, date, userId, hasPerformedAjax, postId, ...options } = req.body;
+    let { title, question, time, date, userId, hasPerformedAjax, postId, count, ...options } = req.body;
+
+    // console.log(options)
 
     // FORMATTING DEADLINE'S DATETIME
     let dateArr = date.split('/');
@@ -103,7 +105,7 @@ const voting = (req, res) => {
                     if (err) {
                         console.log(err)
                     } else {
-                        res.json( {message: 'You voted!', updatedOption: result.rows[0], status: true} )
+                        res.json( {message: 'Your vote has been placed!', updatedOption: result.rows[0], status: true} )
                     }
                 })
             })

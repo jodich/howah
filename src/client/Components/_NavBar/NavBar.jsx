@@ -19,7 +19,7 @@ export default class NavBar extends React.Component {
             <nav>
                 <div className="nav-wrapper">
                     <div className="container">
-                        <Link to='/' className="brand-logo center">HOW AH?</Link>
+                        <Link to='/app' className="brand-logo center">HOW AH?</Link>
                         <Link to="#" data-target="mobile-nav" className="sidenav-trigger"><i className="material-icons">:::</i></Link>
                         <ul className="left hide-on-med-and-down">
                             <li><Link to='/app'>Home</Link></li>
