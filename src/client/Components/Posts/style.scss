@@ -1,0 +1,95 @@
+.posts {
+    a {
+        text-decoration: inherit;
+        color: inherit;
+    }
+
+
+    .all-posts {
+
+        .card {
+            height: 200px;
+
+            p {
+                height: 110px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+    }
+
+    .post {
+
+        h4 {
+            line-height: 1.25em;
+            margin-bottom: 40px;
+        }
+
+        p {
+            margin: 0 0 20px 0;
+        }
+
+        .message {
+            font-size: 20px;
+            color: #ffea00;
+            padding: 10px 20px;
+            margin-bottom: 40px;
+            border-radius: 5px;
+
+            a {
+                color: #fff;
+            }
+        }
+
+        .options{
+            color: inherit;
+
+            .option-text {
+                margin-bottom: 20px;
+            }
+
+            .option-poll {
+                margin: 0px;
+                margin-bottom: 40px;
+                padding: 0px;
+
+            }
+            
+            .points {
+                height: 40px;
+                line-height: 40px;
+                border: 1px solid black;
+                border-right: 0px;
+                border-radius: 5px 0px 0px 5px;
+            }
+            
+            .vote {
+                height: 40px;
+                line-height: 40px;
+                border-radius: 0px 5px 5px 0px;
+            }
+        }
+
+        .duration{
+
+            .row .cir {
+                margin: 0 auto;
+                background-color: #fff;
+                border-radius: 50%;
+                height: 50px;
+                width: 50px;
+                line-height: 50px;
+            }
+
+            h6 {
+                margin: 0px;
+                margin-bottom: 20px;
+            }
+            
+        }
+
+    }
+
+}
+
