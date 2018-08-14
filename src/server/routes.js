@@ -9,7 +9,7 @@ module.exports = (app) => {
 
     app.get('/api/categories', controllers.selectCategories);
 
-    app.post('/api/post/:id/option/:optionId', controllers.voting)
+    app.post('/api/posts/:id/option/:optionId', controllers.voting)
 
     app.get('/api/posts/:id', controllers.selectSpecificPost);
     

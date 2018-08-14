@@ -64,7 +64,14 @@ export default class Post extends React.Component {
             fetch(url, opts)
                 .then(apiResponse => apiResponse.json())
                 .then(apiData => {
-                    console.log(apiData)
+                    if (apiData.status) {
+                        let newOptionsArr = this.state.options.slice()
+                        let selectedOption = newOptionsArr.find( obj => obj.id == apiData.updatedOption.id);
+                        selectedOption.points = apiData.updatedOption.points;
+                        this.setState( {message: apiData.message, options: newOptionsArr } )
+                    } else {
+                        this.setState( {message: apiData.message} )
+                    }
                 })
                 .catch((error) =>{
                     console.error(error);
@@ -83,7 +90,7 @@ export default class Post extends React.Component {
 
         if (this.state.message) {
             var errMessage = <div className="message teal">
-                                ERROR: <Link to='/login'>{this.state.message}</Link>
+                                {this.state.message}
                             </div>
         }
 

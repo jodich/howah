@@ -79,10 +79,10 @@ export default class NewPostForm extends React.Component {
           }
           fetch('/api/submit-new-post', opts)
             .then(apiResponse => apiResponse.json())
-            .then(apiResult => {
+            .then(apiData => {
               this.setState({
-                hasPerformedAjax: apiResult.status,
-                postId: apiResult.postId
+                hasPerformedAjax: apiData.status,
+                postId: apiData.postId
               });
             })
     }

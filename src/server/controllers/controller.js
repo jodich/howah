@@ -76,10 +76,43 @@ const postNewPost = (req, res) => {
 }
 
 const voting = (req, res) => {
+    let userId = req.cookies['user_id'];
+    let postId = req.params.id;
+    let optionId = req.params.optionId;
 
-    db.query((err, result) => {
+    let checkVote = 'SELECT * FROM votes WHERE user_id = $1 AND post_id = $2';
+    let values = [userId, postId];
+
+    db.query(checkVote, values, (err, result) => {
         if (err) {
             console.log(err)
+        }
+
+        if (result.rows.length < 1 ) {
+            console.log('there is no existing votes, may add vote');
+
+            let insertVote = 'INSERT INTO votes (user_id, post_id, option_id) VALUES ($1, $2, $3)';
+            let values = [userId, postId, optionId];
+        
+            db.query(insertVote, values, (err, result) => {
+                if (err) {
+                    console.log(err)
+                }
+
+                let selectCountVotes = 'UPDATE options SET points = (SELECT COUNT(option_id) FROM votes WHERE option_id = $1) WHERE id = $2 RETURNING *';
+                let values = [optionId, optionId]
+                db.query(selectCountVotes, values, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log(result.rows)
+                        res.json( {message: 'You voted!', updatedOption: result.rows[0], status: true} )
+                    }
+                })
+            })
+
+        } else {
+            res.json( {message: 'You have already voted', status: false} );
         }
     })
 }
