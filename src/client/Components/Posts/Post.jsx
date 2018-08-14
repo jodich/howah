@@ -18,13 +18,14 @@ export default class Post extends React.Component {
     componentDidMount() {
         console.log('post component did mount')
 
-        let postId = this.props.match.params.id
+        let postId = this.props.match.params.id;
 
         let url = `/api/posts/${postId}`
 
         fetch(url)
           .then(apiResponse => apiResponse.json())
           .then(apiData => {
+              console.log(apiData.options)
               this.setState( {post: apiData.post, options: apiData.options, hasPerformedAjax: true} )
           });
     }
@@ -66,8 +67,10 @@ export default class Post extends React.Component {
                 .then(apiData => {
                     if (apiData.status) {
                         let newOptionsArr = this.state.options.slice()
+                        console.log(newOptionsArr)
                         let selectedOption = newOptionsArr.find( obj => obj.id == apiData.updatedOption.id);
                         selectedOption.points = apiData.updatedOption.points;
+                        console.log(newOptionsArr)
                         this.setState( {message: apiData.message, options: newOptionsArr } )
                     } else {
                         this.setState( {message: apiData.message} )
@@ -133,7 +136,7 @@ export default class Post extends React.Component {
             [
             <div key="back-1" className="row post">
                 <div className="col s12 m10 offset-m1 center">
-                    <Link to="/posts">Back</Link>
+                    <Link to="/app/posts">Back</Link>
                 </div>
             </div>,
             <div key="qn" className="row post">
@@ -155,7 +158,7 @@ export default class Post extends React.Component {
             </div>,
             <div key="back-2" className="row post">
                 <div className="col s12 m10 offset-m1 center">
-                    <Link to="/posts">Back</Link>
+                    <Link to="/app/posts">Back</Link>
                 </div>
             </div>
             ]

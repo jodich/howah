@@ -92,11 +92,11 @@ export default class NewPostForm extends React.Component {
         var {hasPerformedAjax, postId} = this.state
 
         if (!loggedIn) {
-            return <Redirect to='/login' />
+            return <Redirect to='/app/login' />
         }
 
         if (hasPerformedAjax) {
-            return <Redirect to={'/posts/' + postId} />
+            return <Redirect to={'/app/posts/' + postId} />
         }
 
         return(

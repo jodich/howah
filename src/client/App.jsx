@@ -1,6 +1,6 @@
 import React from 'react';
 import Home from './Components/Home/Home';
-import { Switch, Route, Link, Redirect } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 
 // Components
 import SignupFrom from './Components/SignupForm/SignupForm';
@@ -43,6 +43,7 @@ export default class App extends React.Component {
         var { loggedIn, user, redirectLogin } = this.state
 
         return (
+
         [
             <header>
                 <NavBar loggedIn={this.state.loggedIn} logoutHandler={this.logoutHandler} />
@@ -51,14 +52,14 @@ export default class App extends React.Component {
             <main>
                 <Switch>
                     {/* Public Routes */}
-                    <Route exact path='/' render={()=><Home />}/>
-                    <Route path='/signup' render={()=><SignupFrom loginHandler={this.loginHandler} redirectLogin={redirectLogin} />} />
-                    <Route path='/login' render={()=><LoginForm loginHandler={this.loginHandler} redirectLogin={redirectLogin} />} />
-                    <Route path='/posts' render={()=><Posts loggedIn={loggedIn} user={user} />} />
+                    <Route exact path='/app' render={()=><Home />}/>
+                    <Route path='/app/signup' render={()=><SignupFrom loginHandler={this.loginHandler} redirectLogin={redirectLogin} />} />
+                    <Route path='/app/login' render={()=><LoginForm loginHandler={this.loginHandler} redirectLogin={redirectLogin} />} />
+                    <Route path='/app/posts' render={()=><Posts loggedIn={loggedIn} user={user} />} />
 
                     {/* Private Routes */}
-                    <Route path='/profile' render={()=><ProfilePage loggedIn={loggedIn} user={user} />} />
-                    <Route path='/new-post' render={()=><NewPostForm loggedIn={loggedIn} user={user} />} />
+                    <Route path='/app/profile' render={()=><ProfilePage loggedIn={loggedIn} user={user} />} />
+                    <Route path='/app/new-post' render={()=><NewPostForm loggedIn={loggedIn} user={user} />} />
                 </Switch>
             </main>,
             
@@ -66,6 +67,7 @@ export default class App extends React.Component {
                 <StickyFooter/>
             </footer>
         ]
+
         );
     }
 }

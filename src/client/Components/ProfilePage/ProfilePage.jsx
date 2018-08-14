@@ -14,7 +14,7 @@ export default class ProfilePage extends React.Component {
         const {user, loggedIn} = this.props
 
         if (!loggedIn) {
-            return <Redirect to='/login' />
+            return <Redirect to='/app/login' />
         }
 
         return(

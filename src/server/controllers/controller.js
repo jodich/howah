@@ -1,6 +1,4 @@
 const db = require('../db.js');
-const sha256 = require('js-sha256');
-
 
 const selectCategories = (req, res) => {
 
@@ -28,7 +26,7 @@ const selectSpecificPost = (req, res) => {
     let value = [postId];
     db.query(selectSpecificPost, value, (err, result) => {
         let resultPost = result.rows[0];
-        let selectPostOptions = "SELECT * FROM options WHERE post_id = $1"
+        let selectPostOptions = "SELECT * FROM options WHERE post_id = $1 ORDER BY id"
         db.query(selectPostOptions, value, (err, result) => {
             let resultOptions = result.rows
             res.json( {post: resultPost, options: resultOptions} )
@@ -89,7 +87,7 @@ const voting = (req, res) => {
         }
 
         if (result.rows.length < 1 ) {
-            console.log('there is no existing votes, may add vote');
+            // there is no existing votes, may add vote;
 
             let insertVote = 'INSERT INTO votes (user_id, post_id, option_id) VALUES ($1, $2, $3)';
             let values = [userId, postId, optionId];
@@ -105,7 +103,6 @@ const voting = (req, res) => {
                     if (err) {
                         console.log(err)
                     } else {
-                        console.log(result.rows)
                         res.json( {message: 'You voted!', updatedOption: result.rows[0], status: true} )
                     }
                 })

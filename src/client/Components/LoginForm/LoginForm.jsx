@@ -45,7 +45,7 @@ export default class SignupFrom extends React.Component {
     render() {
         const { redirectLogin } = this.props
         if (redirectLogin) {
-            return <Redirect to='/profile' />
+            return <Redirect to='/app/profile' />
         }
 
         return(
