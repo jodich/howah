@@ -9,8 +9,13 @@ export default class NewPostForm extends React.Component {
         this.state = {
             title: null,
             question: null,
-            option_1: null,
-            option_2: null,
+            questionImg: null,
+            options: {
+
+            },
+            images: {
+
+            },
             time: null,
             date: null,
             userId: null,
@@ -62,22 +67,6 @@ export default class NewPostForm extends React.Component {
         });
 
     }
-
-    componentWillUnmount() {
-        this.setState = ({
-            title: null,
-            question: null,
-            option_1: null,
-            option_2: null,
-            time: null,
-            date: null,
-            userId: null,
-
-            hasPerformedAjax: false,
-            postId: null,
-            count: 2
-        })
-    }
     
     componentDidUpdate() {
         console.log(this.state)
@@ -86,24 +75,40 @@ export default class NewPostForm extends React.Component {
     changeHandler(event) {
         let text = event.target.value
         let field = event.target.id
-        this.setState( {[field]: text} )
+
+        if (event.target.className.includes('option')) {
+            let options = this.state.options
+            options[field] = text
+            this.setState( { options: options } )
+        } else {
+            this.setState( { [field]: text } )
+        }
+
     }
 
     changeFileHandler(event) {
-        // console.log(event.target.files[0])
         let field = event.target.id
+        let images = this.state.images
+        let questionImg = this.state.questionImg
 
         let fd = new FormData();
         fd.append('image', event.target.files[0]);
-
+        
         axios.post('/api/upload-image', fd)
-          .then(apiResponse => {
+        .then(apiResponse => {
             // console.log(apiResponse.data) // all the stuff i send over is here
             if (apiResponse.data.uploaded) {
-                document.querySelector(`#${field}_status`).textContent = 'Image is uploaded'
+                document.querySelector(`#${field}_status`).textContent = 'Image uploaded'
             }
-            this.setState( {[field]: apiResponse.data.url, uploaded: false} )
-          })
+
+            if (field == "qnImg") {
+                questionImg = apiResponse.data.url
+                this.setState( {questionImg: questionImg, uploaded: false} )
+            } else {
+                images[field] = apiResponse.data.url
+                this.setState( {images: images, uploaded: false} )
+            }
+        })
     }
 
     submitHandler(event) {
@@ -131,17 +136,18 @@ export default class NewPostForm extends React.Component {
     }
 
     minusOption() {
-        let count = this.state.count
-        
-        let inputField = `option_${count}`
-        let fileField = `file-option_${count}`
+        let {count} = this.state
+        let options = {...this.state.options};
+        let images = {...this.state.images};
 
-        delete this.state[inputField]
-        delete this.state[fileField]
-        // Deleting directly from STATE, WHICH IS BAD. SOS
-        
+        let inputField = `option_${count}`
+        let fileField = `image_${count}`
+
+        delete options[inputField]
+        delete images[fileField]
+
         count = count - 1
-        this.setState( {count: count} )
+        this.setState( {count: count, options: options, images: images} );
     }
 
     render() {
@@ -152,20 +158,24 @@ export default class NewPostForm extends React.Component {
             return <Redirect to='/login' />
         }
 
+        if (hasPerformedAjax) {
+            return <Redirect to={'/posts/' + postId} />
+        }
+
         var allOptionsDOM = [];
         for ( let i = 1; i < count + 1; i++ ) {
             allOptionsDOM.push(
                 <div className="row opt" id={`opt-${i}`}>
                     <div className="input-field col s7">
-                        <textarea id={`option_${i}`} className="option_0 validate materialize-textarea" onChange={this.changeHandler} required/>
+                        <textarea id={`option_${i}`} className="option validate materialize-textarea" onChange={this.changeHandler} required/>
                         <label htmlFor={`option_${i}`}>{`Option ${i}`}</label>
                     </div>
                     <div class="file-field input-field col s5">
                         <div class="btn">
-                            <span>File</span><input id={`image_${i}`} type="file" onChange={this.changeFileHandler} />
+                            <span>Image</span><input id={`image_${i}`} type="file" onChange={this.changeFileHandler} />
                         </div>
                         <div class="file-path-wrapper">
-                            <input class={`file-path option_${i}`} type="text"/>
+                            <input class={`file-path option_${i}`} type="text" placeholder="optional"/>
                             <span id={`image_${i}_status`} class="helper-text"></span>
                         </div>
                     </div>
@@ -182,10 +192,6 @@ export default class NewPostForm extends React.Component {
                     </div>
                 </div>
             </div>
-        }
-
-        if (hasPerformedAjax) {
-            return <Redirect to={'/posts/' + postId} />
         }
 
         return(
@@ -210,6 +216,15 @@ export default class NewPostForm extends React.Component {
                         <div className="input-field col s12">
                         <textarea id="question" className="materialize-textarea validate" onChange={this.changeHandler} required></textarea>
                         <label htmlFor="question">Question</label>
+                        </div>
+                        <div class="file-field input-field col s12">
+                            <div class="btn">
+                                <span>Question Image</span><input id="qnImg" type="file" onChange={this.changeFileHandler} />
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input className="file-path" type="text" placeholder="optional"/>
+                                <span id="qnImg_status" class="helper-text"></span>
+                            </div>
                         </div>
                     </div>
 

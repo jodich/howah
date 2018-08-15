@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-
 export default class Post extends React.Component {
     constructor(props) {
         super(props);
@@ -32,16 +31,6 @@ export default class Post extends React.Component {
 
     componentDidUpdate() {
         console.log('post component did an update')
-    }
-
-    componentWillUnmount() {
-        this.setState ({
-            post: {},
-            options: [],
-            hasPerformedAjax: false,
-
-            message: false
-        })
     }
 
     clickHandler(event) {
@@ -112,21 +101,33 @@ export default class Post extends React.Component {
         })
 
         const allOptions = options.map( (option, index) => {
-            var optionImage;
-            if (option.option_image !== 'null') {
-                optionImage = 
+            var optionContent;
+            if (option.option_image == 'null') {
+                optionContent = 
+                <div className="col s12 m12 ">
+                    {option.option}
+                </div>
+            } else if (option.option == 'null') {
+                optionContent = 
                 <div className="col s12 m12 ">
                     <img src={option.option_image} />
                 </div>
+            } else {
+                optionContent = 
+                <span>
+                    <div className="col s12 m4 ">
+                        <img src={option.option_image} />
+                    </div>
+                    <div className="col s12 m8 ">
+                        {option.option}
+                    </div>
+                </span>
             }
 
             return(
                 [
                 <div key="text" className="row option-text">
-                    {optionImage}
-                    <div className="col s12 m12 ">
-                        {option.option}
-                    </div>
+                    {optionContent}
                 </div>,
                 <div key="poll" className="row option-poll">
                     <div className="col s9 m9 points center-align lighten-2">
@@ -145,7 +146,7 @@ export default class Post extends React.Component {
             [
             <div key="back-1" className="row post">
                 <div className="col s12 m10 offset-m1 center">
-                    <Link to="/app/posts">Back</Link>
+                    <Link to="/posts">Back</Link>
                 </div>
             </div>,
             <div key="qn" className="row post">
@@ -167,7 +168,7 @@ export default class Post extends React.Component {
             </div>,
             <div key="back-2" className="row post">
                 <div className="col s12 m10 offset-m1 center">
-                    <Link to="/app/posts">Back</Link>
+                    <Link to="/posts">Back</Link>
                 </div>
             </div>
             ]

@@ -36,26 +36,23 @@ const selectSpecificPost = (req, res) => {
 }
 
 const postNewPost = (req, res) => {
-    let { title, question, time, date, userId, hasPerformedAjax, postId, count, uploaded, ...options } = req.body;
+    let { title, question, time, date, userId, images, options, ...data } = req.body;
 
-    // // // FORMATTING THE OPTIONS NICELY
-    let optionObj = {}
-    for (let key in options) {
-        optionIndex = key.split('_')[1];
-        optionType = key.split('_')[0];
+    let optionObj = {};
 
-        if (!optionObj[optionIndex]) {
-            optionObj[optionIndex] = [null, null];
-        }
-
-        if (optionType == 'option') {
-            optionObj[optionIndex][0] = options[key]
-        } else if (optionType == 'image') {
-            optionObj[optionIndex][1] = options[key]
-        }
+    var loopFunc = (obj, index) => {
+        for (let key in obj) {
+            let optionIndex = key.split('_')[1]
+        
+            if (!optionObj[optionIndex]) {
+                 optionObj[optionIndex] = [null, null];    
+            }
+            optionObj[optionIndex][index] = obj[key]
+        };
     }
-    // // //
 
+    loopFunc(options, 0)
+    loopFunc(images, 1)
 
     // // // FORMATTING DEADLINE'S DATETIME
     if (date) {
@@ -140,7 +137,6 @@ const voting = (req, res) => {
 const postImage = (req, res) => {
 
     cloudinary.uploader.upload_stream((result) => {
-        // console.log('image uploaded')
         res.json( {url: result.secure_url, uploaded: true} )
 
     }).end(req.file.buffer)
