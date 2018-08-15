@@ -7,7 +7,7 @@ const webpackConfig = require('../../webpack.config');
 const compiler = webpack(webpackConfig);
 const cookieParser = require('cookie-parser');
 const {resolve} = require('path');
-
+const fallback = require('express-history-api-fallback');
 
 app.use(webpackDevMiddleware(compiler, {
     stats: {
@@ -21,10 +21,11 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
-const clientBuildPath = resolve(__dirname, '..', '..', 'public');
-app.use('/app', express.static(clientBuildPath));
-app.get('/app/*', (req, res) => res.sendFile(resolve(clientBuildPath, 'index.html')));
+// const clientBuildPath = resolve(__dirname, '..', '..', 'public');
+// app.use('/app', express.static(clientBuildPath));
+// app.get('/app/*', (req, res) => res.sendFile(resolve(clientBuildPath, 'index.html')));
 
 require('./routes')(app);
 
+app.use(fallback(resolve(__dirname, '..', '..', 'public/index.html')));
 const server = app.listen(3000, () => { console.log('listening on port 3000')});

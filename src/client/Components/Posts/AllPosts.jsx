@@ -9,7 +9,7 @@ export default class Posts extends React.Component {
         var allPosts = posts.map( (post, index) => {
             return (
                 <div className="col s12 m4" key={index}>
-                <Link to={"/app/posts/" + post.id} >
+                <Link to={"/posts/" + post.id} >
                 <div className="card">
                     {/* <div class="card-image"><img src="images/sample-1.jpg" /></div> */}
                     <div className="card-content">

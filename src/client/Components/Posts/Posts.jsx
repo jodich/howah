@@ -31,8 +31,8 @@ export default class Posts extends React.Component {
         return(
             <div className="container posts">
                 <Switch>
-                    <Route path='/app/posts/:id' render={ (props)=><Post {...this.props} match={props.match}/> } />
-                    <Route path='/app/posts' render={ ()=><AllPosts posts={this.state.posts}/> } />
+                    <Route path='/posts/:id' render={ (props)=><Post {...this.props} match={props.match}/> } />
+                    <Route path='/posts' render={ ()=><AllPosts posts={this.state.posts}/> } />
                 </Switch>
             </div>
         )

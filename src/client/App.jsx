@@ -52,15 +52,15 @@ export default class App extends React.Component {
             <main>
                 <Switch>
                     {/* Public Routes */}
-                    <Route exact path='/app' render={()=><Home />}/>
-                    <Route path='/app/signup' render={()=><SignupFrom loginHandler={this.loginHandler} redirectLogin={redirectLogin} />} />
-                    <Route path='/app/login' render={()=><LoginForm loginHandler={this.loginHandler} redirectLogin={redirectLogin} />} />
-                    <Route path='/app/posts' render={()=><Posts loggedIn={loggedIn} user={user} />} />
+                    <Route exact path='/' render={()=><Home />}/>
+                    <Route path='/signup' render={()=><SignupFrom loginHandler={this.loginHandler} redirectLogin={redirectLogin} />} />
+                    <Route path='/login' render={()=><LoginForm loginHandler={this.loginHandler} redirectLogin={redirectLogin} />} />
+                    <Route path='/posts' render={()=><Posts loggedIn={loggedIn} user={user} />} />
 
                     {/* Private Routes */}
-                    <Route path='/app/profile' render={()=><ProfilePage loggedIn={loggedIn} user={user} />} />
-                    <Route path='/app/new-post' render={()=><NewPostForm loggedIn={loggedIn} user={user} />} />
-                    <Redirect from="/" to="/app"/>
+                    <Route path='/profile' render={()=><ProfilePage loggedIn={loggedIn} user={user} />} />
+                    <Route path='/new-post' render={()=><NewPostForm loggedIn={loggedIn} user={user} />} />
+                    {/* <Redirect from="/" to=""/> */}
                 </Switch>
             </main>,
             

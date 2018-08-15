@@ -112,9 +112,18 @@ export default class Post extends React.Component {
         })
 
         const allOptions = options.map( (option, index) => {
+            var optionImage;
+            if (option.option_image !== 'null') {
+                optionImage = 
+                <div className="col s12 m12 ">
+                    <img src={option.option_image} />
+                </div>
+            }
+
             return(
                 [
                 <div key="text" className="row option-text">
+                    {optionImage}
                     <div className="col s12 m12 ">
                         {option.option}
                     </div>

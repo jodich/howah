@@ -1,4 +1,5 @@
 const db = require('../db.js');
+const cloudinary = require('cloudinary');
 
 const selectCategories = (req, res) => {
 
@@ -35,14 +36,33 @@ const selectSpecificPost = (req, res) => {
 }
 
 const postNewPost = (req, res) => {
-    let { title, question, time, date, userId, hasPerformedAjax, postId, count, ...options } = req.body;
+    let { title, question, time, date, userId, hasPerformedAjax, postId, count, uploaded, ...options } = req.body;
 
-    // console.log(options)
+    // // // FORMATTING THE OPTIONS NICELY
+    let optionObj = {}
+    for (let key in options) {
+        optionIndex = key.split('_')[1];
+        optionType = key.split('_')[0];
 
-    // FORMATTING DEADLINE'S DATETIME
-    let dateArr = date.split('/');
-    let formatedDate = dateArr.reverse().join('-')
-    let deadline = `${formatedDate} ${time}:00`
+        if (!optionObj[optionIndex]) {
+            optionObj[optionIndex] = [null, null];
+        }
+
+        if (optionType == 'option') {
+            optionObj[optionIndex][0] = options[key]
+        } else if (optionType == 'image') {
+            optionObj[optionIndex][1] = options[key]
+        }
+    }
+    // // //
+
+
+    // // // FORMATTING DEADLINE'S DATETIME
+    if (date) {
+        let dateArr = date.split('/');
+        let formatedDate = dateArr.reverse().join('-')
+        var deadline = `${formatedDate} ${time}:00`
+    }
     // // //
 
     let insertNewPost = 'INSERT INTO posts (title, question, author_id, deadline) VALUES ($1, $2, $3, $4) RETURNING *';
@@ -54,16 +74,17 @@ const postNewPost = (req, res) => {
         }
 
         // FORMATTING INSERT OPTION QUERY
-        let insertOptions = 'INSERT INTO options (post_id, option) VALUES '
+        let insertOptions = 'INSERT INTO options (post_id, option, option_image) VALUES '
         let resPostId = result.rows[0].id;
         let dataArr = []
-        for (key in options) {
-            let data = `(${resPostId}, \'${options[key]}\')`
-            dataArr.push(data);
+        for (key in optionObj) {
+            let content = optionObj[key][0];
+            let image = optionObj[key][1];
+            let data = `(${resPostId}, \'${content}\', \'${image}\')`
+            dataArr.push(data)
         }
         let values = dataArr.join(', ');
-        insertOptions = insertOptions + values;
-        insertOptions = insertOptions + ' RETURNING *'
+        insertOptions = insertOptions + values + ' RETURNING *'
         // // //
 
         db.query(insertOptions, (err, result) => {
@@ -116,6 +137,15 @@ const voting = (req, res) => {
     })
 }
 
+const postImage = (req, res) => {
+
+    cloudinary.uploader.upload_stream((result) => {
+        // console.log('image uploaded')
+        res.json( {url: result.secure_url, uploaded: true} )
+
+    }).end(req.file.buffer)
+}
+
 
 // EXPORT controllers
 module.exports = {
@@ -123,5 +153,6 @@ module.exports = {
     selectPosts,
     selectSpecificPost,
     postNewPost,
-    voting
+    voting,
+    postImage
 };

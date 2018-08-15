@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './style.scss'
 import { Redirect } from 'react-router-dom'
+import axios from 'axios';
 
 export default class NewPostForm extends React.Component {
     constructor() {
@@ -16,7 +17,8 @@ export default class NewPostForm extends React.Component {
 
             hasPerformedAjax: false,
             postId: null,
-            count: 2
+            count: 2,
+            uploaded: false
         }
         this.changeFileHandler = this.changeFileHandler.bind(this)
         this.changeHandler = this.changeHandler.bind(this)
@@ -76,6 +78,10 @@ export default class NewPostForm extends React.Component {
             count: 2
         })
     }
+    
+    componentDidUpdate() {
+        console.log(this.state)
+    }
 
     changeHandler(event) {
         let text = event.target.value
@@ -84,13 +90,20 @@ export default class NewPostForm extends React.Component {
     }
 
     changeFileHandler(event) {
-        let file = event.target.files[0]
+        // console.log(event.target.files[0])
         let field = event.target.id
-        this.setState( {[field]: file} )
-    }
 
-    componentDidUpdate() {
-        console.log(this.state)
+        let fd = new FormData();
+        fd.append('image', event.target.files[0]);
+
+        axios.post('/api/upload-image', fd)
+          .then(apiResponse => {
+            // console.log(apiResponse.data) // all the stuff i send over is here
+            if (apiResponse.data.uploaded) {
+                document.querySelector(`#${field}_status`).textContent = 'Image is uploaded'
+            }
+            this.setState( {[field]: apiResponse.data.url, uploaded: false} )
+          })
     }
 
     submitHandler(event) {
@@ -100,7 +113,7 @@ export default class NewPostForm extends React.Component {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify({...this.state})
-          }
+        }
           fetch('/api/submit-new-post', opts)
             .then(apiResponse => apiResponse.json())
             .then(apiData => {
@@ -135,9 +148,9 @@ export default class NewPostForm extends React.Component {
         var {loggedIn} = this.props
         var {hasPerformedAjax, postId, count} = this.state
 
-        // if (!loggedIn) {
-        //     return <Redirect to='/app/login' />
-        // }
+        if (!loggedIn) {
+            return <Redirect to='/login' />
+        }
 
         var allOptionsDOM = [];
         for ( let i = 1; i < count + 1; i++ ) {
@@ -149,10 +162,11 @@ export default class NewPostForm extends React.Component {
                     </div>
                     <div class="file-field input-field col s5">
                         <div class="btn">
-                            <span>File</span><input id={`file-option_${i}`} type="file" onChange={this.changeFileHandler} />
+                            <span>File</span><input id={`image_${i}`} type="file" onChange={this.changeFileHandler} />
                         </div>
                         <div class="file-path-wrapper">
                             <input class={`file-path option_${i}`} type="text"/>
+                            <span id={`image_${i}_status`} class="helper-text"></span>
                         </div>
                     </div>
                 </div>
@@ -171,7 +185,7 @@ export default class NewPostForm extends React.Component {
         }
 
         if (hasPerformedAjax) {
-            return <Redirect to={'/app/posts/' + postId} />
+            return <Redirect to={'/posts/' + postId} />
         }
 
         return(
