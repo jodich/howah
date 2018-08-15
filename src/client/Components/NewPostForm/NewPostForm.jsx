@@ -13,12 +13,12 @@ export default class NewPostForm extends React.Component {
             time: null,
             date: null,
             userId: null,
-            // options: [ {option_1: null}, {option_2: null}],
 
             hasPerformedAjax: false,
             postId: null,
             count: 2
         }
+        this.changeFileHandler = this.changeFileHandler.bind(this)
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.addOption = this.addOption.bind(this)
@@ -27,6 +27,13 @@ export default class NewPostForm extends React.Component {
 
     componentDidMount() {
         console.log('new post component has mounted');
+
+        let futureDate = ''
+        let today = new Date();
+        let year = today.getFullYear() + 1;
+        let month = today.getMonth();
+        let date = today.getDate();
+        futureDate = `${year}-${month}-${date}`
 
         if (this.props.loggedIn) {
             this.setState( {userId: this.props.user.id} )
@@ -47,7 +54,9 @@ export default class NewPostForm extends React.Component {
             onClose: () => {
                 let text = calender[0].value
                 this.setState( {date: text} )
-            }
+            },
+            minDate: today,
+            maxDate: new Date(futureDate)
         });
 
     }
@@ -74,6 +83,16 @@ export default class NewPostForm extends React.Component {
         this.setState( {[field]: text} )
     }
 
+    changeFileHandler(event) {
+        let file = event.target.files[0]
+        let field = event.target.id
+        this.setState( {[field]: file} )
+    }
+
+    componentDidUpdate() {
+        console.log(this.state)
+    }
+
     submitHandler(event) {
         event.preventDefault();
         const opts = {
@@ -94,50 +113,21 @@ export default class NewPostForm extends React.Component {
 
     addOption() {
         let count = this.state.count
-        let optionsArr = document.querySelectorAll('.opt');
-        let optionLast = optionsArr[optionsArr.length - 1]; // can change optionsArr.length to count later
-        let newOption = optionLast.cloneNode(true);
-
         count = count + 1
-        let field = `option_${count}`;
-        this.setState( { [field]: null, count: count } )
-        
-        newOption.id = `opt-${count}` 
-        newOption.childNodes[0].innerHTML = '';
-        
-        // Making new fields
-        var newInput = document.createElement('input')
-        newInput.id = `option_${count}`
-        newInput.type = "text"
-        newInput.className = "validate"
-        newInput.required = true
-        newInput.onkeyup = (event) => {this.changeHandler(event)}
-        newOption.childNodes[0].appendChild(newInput)
-
-        var newLabel = document.createElement('label')
-        newLabel.htmlFor = `option_${count}`
-        newLabel.textContent = `Option ${count}`
-        newOption.childNodes[0].appendChild(newLabel)
-
-        optionLast.parentNode.insertBefore(newOption, optionLast.nextSibling);
-    }
-
-    componentDidUpdate() {
-        console.log(this.state)
+        this.setState( { count: count } )
     }
 
     minusOption() {
         let count = this.state.count
-        count = count - 1
-
-        let optionsArr = document.querySelectorAll('.opt');
-        let optionLast = optionsArr[optionsArr.length - 1]; // can change optionsArr.length to count later
-        let field = optionLast.querySelectorAll('input')[0].id       
-        optionLast.parentNode.removeChild(optionLast);
         
-        delete this.state[field]
+        let inputField = `option_${count}`
+        let fileField = `file-option_${count}`
+
+        delete this.state[inputField]
+        delete this.state[fileField]
         // Deleting directly from STATE, WHICH IS BAD. SOS
         
+        count = count - 1
         this.setState( {count: count} )
     }
 
@@ -148,6 +138,26 @@ export default class NewPostForm extends React.Component {
         // if (!loggedIn) {
         //     return <Redirect to='/app/login' />
         // }
+
+        var allOptionsDOM = [];
+        for ( let i = 1; i < count + 1; i++ ) {
+            allOptionsDOM.push(
+                <div className="row opt" id={`opt-${i}`}>
+                    <div className="input-field col s7">
+                        <textarea id={`option_${i}`} className="option_0 validate materialize-textarea" onChange={this.changeHandler} required/>
+                        <label htmlFor={`option_${i}`}>{`Option ${i}`}</label>
+                    </div>
+                    <div class="file-field input-field col s5">
+                        <div class="btn">
+                            <span>File</span><input id={`file-option_${i}`} type="file" onChange={this.changeFileHandler} />
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class={`file-path option_${i}`} type="text"/>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
 
         if (count > 2) {
             var minusBtn = 
@@ -188,18 +198,9 @@ export default class NewPostForm extends React.Component {
                         <label htmlFor="question">Question</label>
                         </div>
                     </div>
-                    <div className="row opt" id="opt-1">
-                        <div className="input-field col s12">
-                        <input id="option_1" type="text" className="validate" onChange={this.changeHandler} required/>
-                        <label htmlFor="option_1">Option 1</label>
-                        </div>
-                    </div>
-                    <div className="row opt" id="opt-2">
-                        <div className="input-field col s12">
-                        <input id="option_2" type="text" className="validate" onChange={this.changeHandler} required/>
-                        <label htmlFor="option_2">Option 2</label>
-                        </div>
-                    </div>
+
+                    {allOptionsDOM}
+
                     <div className="row">
                         <div className="col s12 center">
                         <div className="btn-floating btn-large waves-effect waves-light " onClick={this.addOption}>
@@ -220,6 +221,7 @@ export default class NewPostForm extends React.Component {
                         <div className="input-field col s6">
                             <input id="date" type="text" className="datepicker" />
                             <label htmlFor="date">Date</label>
+                            <span class="helper-text">max duration is one year</span>
                         </div>
                         <div className="input-field col s6">
                             <input id="time" type="text" className="timepicker" />

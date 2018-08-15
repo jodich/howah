@@ -1,8 +1,18 @@
 .page-footer {
     background-color: #fff;
     padding: 20px 0px;
+    font-size: 1em;
 
     .footer .row {
         margin: 0px;
+
+        .col {
+            margin: 0px;
+        }
+    }
+
+    a {
+        color: inherit;
+        font-size: 1.4em;
     }
 }
