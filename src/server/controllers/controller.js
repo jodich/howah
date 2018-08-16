@@ -12,6 +12,7 @@ const selectCategories = (req, res) => {
 const selectPosts = (req, res) => {
 
     let selectPosts = "SELECT * FROM posts WHERE current_timestamp < deadline"
+    // let selectPosts = "SELECT *, AGE(deadline, current_timestamp::timestamp(0)) FROM posts WHERE current_timestamp < deadline ORDER BY age"    
     db.query(selectPosts, (err, result) => {
         if (err) {
             console.log(err)
@@ -36,7 +37,7 @@ const selectSpecificPost = (req, res) => {
 }
 
 const postNewPost = (req, res) => {
-    let { title, question, time, date, userId, images, options, ...data } = req.body;
+    let { title, question, questionImg, time, date, userId, images, options, ...data } = req.body;
 
     let optionObj = {};
 
@@ -62,8 +63,8 @@ const postNewPost = (req, res) => {
     }
     // // //
 
-    let insertNewPost = 'INSERT INTO posts (title, question, author_id, deadline) VALUES ($1, $2, $3, $4) RETURNING *';
-    let values = [title, question, userId, deadline];
+    let insertNewPost = 'INSERT INTO posts (title, question, question_image, author_id, deadline) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+    let values = [title, question, questionImg, userId, deadline];
 
     db.query(insertNewPost, values, (err, result) => {
         if (err) {

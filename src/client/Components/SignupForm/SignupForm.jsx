@@ -53,25 +53,25 @@ export default class SignupFrom extends React.Component {
 
         return(
         <div className="row signup">
-            <form className="col s6 offset-s3" onSubmit={this.submitSignupHandler}>
+            <form className="col s12 m6 offset-m3" onSubmit={this.submitSignupHandler}>
                 <div className="row">
-                    <div className="input-field col s6">
+                    <div className="input-field col s12 m6">
                     <input id="name" type="text" className="validate" onChange={this.changeHandler} required/>
                     <label htmlFor="name">Name</label>
                     </div>
-                    <div className="input-field col s6">
+                    <div className="input-field col s12 m6">
                     <input id="email" type="email" className="validate" onChange={this.changeHandler} required/>
                     <label htmlFor="email">Email</label>
                     <span className="helper-text" data-error="Incorrect email format"></span>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="input-field col s6">
+                    <div className="input-field col s12 m6">
                     <input id="password" type="password" className="validate" onChange={this.changeHandler} minLength="6" required/>
                     <label htmlFor="password">Password</label>
                     <span className="helper-text" data-error="Min 6 Characters"></span>
                     </div>
-                    <div className="input-field col s6">
+                    <div className="input-field col s12 m6">
                     <input id="cmfpassword" type="password" className="validate" onChange={this.changeHandler} minLength="6" required/>
                     <label htmlFor="cmfpassword">Confirm Password</label>
                     <span className="helper-text" data-error="Incorrect password length"></span>

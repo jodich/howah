@@ -50,13 +50,13 @@ export default class SignupFrom extends React.Component {
 
         return(
         <div className="row signup">
-            <form className="col s6 offset-s3" onSubmit={this.submitLoginHandler}>
+            <form className="col s12 m4 offset-m4" onSubmit={this.submitLoginHandler}>
                 <div className="row">
-                    <div className="input-field col s6">
+                    <div className="input-field col s12 m10 offset-m1">
                     <input id="email" type="email" className="" onChange={this.changeHandler} required/>
                     <label htmlFor="email">Email</label>
                     </div>
-                    <div className="input-field col s6">
+                    <div className="input-field col s12 m10 offset-m1">
                     <input id="password" type="password" className="" onChange={this.changeHandler} minLength="6" required/>
                     <label htmlFor="password">Password</label>
                     </div>

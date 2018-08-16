@@ -24,15 +24,20 @@ export default class Posts extends React.Component {
 
     componentDidUpdate() {
         console.log('posts component did an update');
+        var elem = document.querySelector('.all-posts .row');
+        var msnry = new Masonry( elem, {
+            transitionDuration: '0.2s',
+        });
     }
+
 
     render() {
 
         return(
-            <div className="container posts">
+            <div className="container-fluid posts">
                 <Switch>
                     <Route path='/posts/:id' render={ (props)=><Post {...this.props} match={props.match}/> } />
-                    <Route path='/posts' render={ ()=><AllPosts posts={this.state.posts}/> } />
+                    <Route path='/posts' render={ ()=><AllPosts hello={this.hello} posts={this.state.posts}/> } />
                 </Switch>
             </div>
         )

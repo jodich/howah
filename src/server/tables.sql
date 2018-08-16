@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS posts (
   id SERIAL PRIMARY KEY,
   title TEXT NOT NULL,
   question TEXT NOT NULL,
-  question_image TEXT DEFAULT 'null',
+  question_image TEXT,
   author_id INTEGER,
   category_id INTEGER,
   created_at TIMESTAMP(0) DEFAULT current_timestamp,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS options (
   id SERIAL PRIMARY KEY,
   post_id INTEGER,
   option TEXT NOT NULL,
-  option_image TEXT DEFAULT 'null',
+  option_image TEXT,
   points INTEGER DEFAULT 0
 );
 

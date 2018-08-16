@@ -31,6 +31,8 @@ export default class Post extends React.Component {
 
     componentDidUpdate() {
         console.log('post component did an update')
+        var elems = document.querySelectorAll('.materialboxed');
+        M.Materialbox.init(elems, {});
     }
 
     clickHandler(event) {
@@ -102,7 +104,7 @@ export default class Post extends React.Component {
 
         const allOptions = options.map( (option, index) => {
             var optionContent;
-            if (option.option_image == 'null') {
+            if (option.option_image == null) {
                 optionContent = 
                 <div className="col s12 m12 ">
                     {option.option}
@@ -110,13 +112,13 @@ export default class Post extends React.Component {
             } else if (option.option == 'null') {
                 optionContent = 
                 <div className="col s12 m12 ">
-                    <img src={option.option_image} />
+                    <img className="materialboxed" src={option.option_image} />
                 </div>
             } else {
                 optionContent = 
                 <span>
                     <div className="col s12 m4 ">
-                        <img src={option.option_image} />
+                        <img className="materialboxed" src={option.option_image} />
                     </div>
                     <div className="col s12 m8 ">
                         {option.option}
@@ -141,6 +143,9 @@ export default class Post extends React.Component {
             )
         });
 
+        if (post.question_image) {
+            var qnImage = <img className="materialboxed" src={post.question_image} id="qn"/>
+        }
 
         return(
             [
@@ -154,6 +159,7 @@ export default class Post extends React.Component {
                     <p className="center-align">Title: {post.title}</p>
                     <h6>Question:</h6>
                     <h4>{post.question}</h4>
+                    {qnImage}
                 </div>
             </div>,
             <div key="bulk" className="row post">

@@ -8,7 +8,8 @@
     .all-posts {
 
         .card {
-            height: 200px;
+            min-height: 200px;
+            max-height: 421px;
 
             p {
                 height: 110px;
@@ -17,13 +18,17 @@
             }
         }
 
+        img {
+            max-height: 200px;
+            object-fit: cover;
+        }
+
     }
 
     .post {
 
         h4 {
             line-height: 1.25em;
-            margin-bottom: 40px;
         }
 
         p {
@@ -34,11 +39,16 @@
             width: 100%;
         }
 
+        #qn {
+            max-height: 300px;
+            object-fit: contain;
+        }
+
         .message {
             font-size: 20px;
             color: #ffea00;
             padding: 10px 20px;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             border-radius: 5px;
 
             a {
@@ -79,7 +89,7 @@
 
             .row .cir {
                 margin: 0 auto;
-                background-color: #fff;
+                background-color: #fff59d;
                 border-radius: 50%;
                 height: 50px;
                 width: 50px;
@@ -97,3 +107,18 @@
 
 }
 
+.grid {
+    margin: 0 auto;
+}
+
+.grid-item {
+    float: left;
+    margin: 0px;
+    width: 100%;
+}
+
+// @media all and (min-width: 600px) {
+//     .grid-item {
+//         width: 44%;
+//     }
+// }
