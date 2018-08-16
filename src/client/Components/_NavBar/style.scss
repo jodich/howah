@@ -1,6 +1,6 @@
 nav {
     box-shadow: none;
-    background-color: #009789;
+    background-color: #009789 !important;
 
     color: white;
     font-family: 'PT Sans', sans-serif;
@@ -12,6 +12,7 @@ nav {
     .brand-logo {
         color: #ffea00;
         font-family: 'Jua', sans-serif;
+        font-size: 40px;
     }
 }
 

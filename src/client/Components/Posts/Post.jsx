@@ -92,7 +92,7 @@ export default class Post extends React.Component {
         var duration = ageKeys.map( (key, index) => {
             return(
                 <div key={index} className="row">
-                    <div className="cir">
+                    <div className="cir z-depth-2">
                         {post.age[key]}
                     </div>
                     <div>
@@ -104,7 +104,7 @@ export default class Post extends React.Component {
 
         const allOptions = options.map( (option, index) => {
             var optionContent;
-            if (option.option_image == null) {
+            if (option.option_image == null || option.option_image == 'null' ) {
                 optionContent = 
                 <div className="col s12 m12 ">
                     {option.option}
@@ -148,20 +148,20 @@ export default class Post extends React.Component {
         }
 
         return(
-            [
+            <div className="container posts">
             <div key="back-1" className="row post">
                 <div className="col s12 m10 offset-m1 center">
                     <Link to="/posts">Back</Link>
                 </div>
-            </div>,
+            </div>
             <div key="qn" className="row post">
                 <div className="col s12 m10 offset-m1">
                     <p className="center-align">Title: {post.title}</p>
                     <h6>Question:</h6>
-                    <h4>{post.question}</h4>
                     {qnImage}
+                    <div className="question">{post.question}</div>
                 </div>
-            </div>,
+            </div>
             <div key="bulk" className="row post">
                 <div className="col s12 m6 offset-m1 options">
                     {errMessage}
@@ -171,13 +171,13 @@ export default class Post extends React.Component {
                     <h6>Time's Up in ...</h6>
                     {duration}
                 </div>
-            </div>,
+            </div>
             <div key="back-2" className="row post">
                 <div className="col s12 m10 offset-m1 center">
                     <Link to="/posts">Back</Link>
                 </div>
             </div>
-            ]
+            </div>
         )
     }
 }

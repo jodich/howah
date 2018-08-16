@@ -16,7 +16,7 @@ export default class NavBar extends React.Component {
     render() {
 
         return(
-            <nav>
+            <nav className="teal">
                 <div className="nav-wrapper">
                     <div className="container">
                         <Link to='/' className="brand-logo center">HOW AH?</Link>
@@ -34,7 +34,6 @@ export default class NavBar extends React.Component {
                         </ul>
                     </div>
                 </div>
-            
                 <ul className="sidenav" id="mobile-nav">
                     <li><Link to='/'>Home</Link></li>
                     <li><Link to='/posts'>Browse</Link></li>
@@ -45,6 +44,7 @@ export default class NavBar extends React.Component {
                     <li><Link to='/' onClick={this.props.logoutHandler}>Logout</Link></li>
                 </ul>
             </nav>
+            
         )
     }
 }

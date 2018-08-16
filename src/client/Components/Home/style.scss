@@ -1,0 +1,47 @@
+main {
+    padding-bottom: 0px;
+}
+
+#home {
+    margin: -40px -20px;
+    
+    .row:nth-child(1) .col {
+        background: url('/road_decide.jpg') no-repeat center center ;
+        background-size: cover;
+        padding: 200px 20px;
+        text-align: center;
+        color: #fff;
+        font-family: 'Baloo Bhai', cursive;
+        font-size: 40px;
+        text-shadow: 2px 2px 5px rgba(100,100,100,1);
+        animation: yourAnimation 1s forwards 0s linear;
+    }
+
+    @keyframes yourAnimation{
+        0%{
+            opacity: 0;
+            }
+        100%{
+            opacity: 1;
+            }
+    }
+
+
+
+    .row:nth-child(2) {
+        // background-color: red;
+        .col {
+
+            h4 {
+                font-family: 'Jua', sans-serif;
+                font-size: 30px;
+            }
+
+
+        }
+    }
+
+
+
+
+}
