@@ -93,12 +93,13 @@ export default class NewPostForm extends React.Component {
 
         let fd = new FormData();
         fd.append('image', event.target.files[0]);
+        document.querySelector(`#${field}_status`).textContent = 'image is uploading...'
         
         axios.post('/api/upload-image', fd)
         .then(apiResponse => {
             // console.log(apiResponse.data) // all the stuff i send over is here
             if (apiResponse.data.uploaded) {
-                document.querySelector(`#${field}_status`).textContent = 'Image uploaded'
+                document.querySelector(`#${field}_status`).textContent = 'Uploaded'
             }
 
             if (field == "qnImg") {

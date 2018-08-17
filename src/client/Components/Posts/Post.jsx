@@ -15,7 +15,7 @@ export default class Post extends React.Component {
     }
 
     componentDidMount() {
-        console.log('post component did mount')
+        // console.log('post component did mount')
 
         let postId = this.props.match.params.id;
 
@@ -30,7 +30,7 @@ export default class Post extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log('post component did an update')
+        // console.log('post component did an update')
         var elems = document.querySelectorAll('.materialboxed');
         M.Materialbox.init(elems, {});
     }
@@ -104,7 +104,7 @@ export default class Post extends React.Component {
 
         const allOptions = options.map( (option, index) => {
             var optionContent;
-            if (option.option_image == null || option.option_image == 'null' ) {
+            if (option.option_image == 'null' ) {
                 optionContent = 
                 <div className="col s12 m12 ">
                     {option.option}

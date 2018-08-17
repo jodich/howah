@@ -8,11 +8,11 @@
     .all-posts {
 
         .card {
-            min-height: 200px;
-            max-height: 421px;
+            // max-height: 420px;
 
             p {
-                height: 110px;
+                min-height: 60px;
+                max-height: 110px;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
@@ -73,6 +73,13 @@
 
             .option-text {
                 margin-bottom: 20px;
+
+                img {
+                    // height: 200px;
+                    object-fit: contain;
+                    object-position: 0 0;
+                    float: left;
+                }
             }
 
             .option-poll {

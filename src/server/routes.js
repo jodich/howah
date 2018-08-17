@@ -1,18 +1,9 @@
 const controllers = require('./controllers/controller')
 const userControllers = require('./controllers/userController')
 
-// const axios = require('axios');
-const cloudinary = require('cloudinary');
-
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
-
-cloudinary.config({ 
-  cloud_name: 'db2fpatds', 
-  api_key: '491492416143532', 
-  api_secret: 'UhXNYUV93GaYh_h0kONJYI0H61I'
-});
 
 module.exports = (app) => {
 

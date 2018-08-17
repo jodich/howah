@@ -63,7 +63,7 @@ const postNewPost = (req, res) => {
     }
     // // //
 
-    let insertNewPost = 'INSERT INTO posts (title, question, question_image, author_id, deadline) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+    let insertNewPost = "INSERT INTO posts (title, question, question_image, author_id, deadline) VALUES ($1, $2, $3, $4, $5) RETURNING *";
     let values = [title, question, questionImg, userId, deadline];
 
     db.query(insertNewPost, values, (err, result) => {
@@ -72,7 +72,7 @@ const postNewPost = (req, res) => {
         }
 
         // FORMATTING INSERT OPTION QUERY
-        let insertOptions = 'INSERT INTO options (post_id, option, option_image) VALUES '
+        let insertOptions = "INSERT INTO options (post_id, option, option_image) VALUES "
         let resPostId = result.rows[0].id;
         let dataArr = []
         for (key in optionObj) {
@@ -98,39 +98,44 @@ const voting = (req, res) => {
     let userId = req.cookies['user_id'];
     let postId = req.params.id;
     let optionId = req.params.optionId;
-
-    let checkVote = 'SELECT * FROM votes WHERE user_id = $1 AND post_id = $2';
-    let values = [userId, postId];
-
-    db.query(checkVote, values, (err, result) => {
+    
+    let checkDeadline = "SELECT * FROM posts WHERE id = $1 AND current_timestamp > deadline";
+    let values = [postId]
+    
+    db.query(checkDeadline, values, (err, result) => {
         if (err) {
             console.log(err)
         }
-
-        if (result.rows.length < 1 ) {
-            // there is no existing votes, may add vote;
-
-            let insertVote = 'INSERT INTO votes (user_id, post_id, option_id) VALUES ($1, $2, $3)';
-            let values = [userId, postId, optionId];
-        
-            db.query(insertVote, values, (err, result) => {
+        if (result.rows.length < 1) {
+            let checkVote = "SELECT * FROM votes WHERE user_id = $1 AND post_id = $2";
+            let values = [userId, postId];
+            db.query(checkVote, values, (err, result) => {
                 if (err) {
                     console.log(err)
                 }
-
-                let selectCountVotes = 'UPDATE options SET points = (SELECT COUNT(option_id) FROM votes WHERE option_id = $1) WHERE id = $2 RETURNING *';
-                let values = [optionId, optionId]
-                db.query(selectCountVotes, values, (err, result) => {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        res.json( {message: 'Your vote has been placed!', updatedOption: result.rows[0], status: true} )
-                    }
-                })
+                if (result.rows.length < 1) {
+                    let insertVote = "INSERT INTO votes (user_id, post_id, option_id) VALUES ($1, $2, $3)";
+                    let values = [userId, postId, optionId];
+                    db.query(insertVote, values, (err, result) => {
+                        if (err) {
+                            console.log(err)
+                        }
+                        let selectCountVotes = "UPDATE options SET points = (SELECT COUNT(option_id) FROM votes WHERE option_id = $1) WHERE id = $2 RETURNING *";
+                        let values = [optionId, optionId]
+                        db.query(selectCountVotes, values, (err, result) => {
+                            if (err) {
+                                console.log(err)
+                            } else {
+                                res.json( {message: 'Your vote has been placed!', updatedOption: result.rows[0], status: true} )
+                            }
+                        })
+                    })
+                } else {
+                    res.json( {message: 'You have already voted', status: false} )
+                }
             })
-
         } else {
-            res.json( {message: 'You have already voted', status: false} );
+            res.json( {message: 'The time is up!', status: false} );
         }
     })
 }

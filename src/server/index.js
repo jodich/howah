@@ -8,6 +8,7 @@ const compiler = webpack(webpackConfig);
 const cookieParser = require('cookie-parser');
 const {resolve} = require('path');
 const fallback = require('express-history-api-fallback');
+const cloudinary = require('cloudinary');
 
 app.use(webpackDevMiddleware(compiler, {
     stats: {
@@ -20,6 +21,12 @@ app.use(express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+
+cloudinary.config({ 
+    cloud_name: 'db2fpatds', 
+    api_key: '491492416143532', 
+    api_secret: 'UhXNYUV93GaYh_h0kONJYI0H61I'
+  });
 
 // const clientBuildPath = resolve(__dirname, '..', '..', 'public');
 // app.use('/app', express.static(clientBuildPath));

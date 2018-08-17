@@ -8,8 +8,10 @@ import Post from './Post.jsx'
 export default class Posts extends React.Component {
     constructor(props) {
         super(props);
-        // this.state = { posts: this.getImages() }
-        this.state = { posts: [] }
+        this.state = { 
+            posts: [],
+            maxImages: 0
+        }
     }
 
     // async getImages() {
@@ -22,40 +24,39 @@ export default class Posts extends React.Component {
 
     componentDidMount() {
         console.log('posts component mounted')
+        let maxImages = this.state.maxImages
         fetch('/api/posts')
         .then(apiResponse => apiResponse.json())
         .then(apiData => {
-            this.setState( {posts: apiData.result} )
+            let posts = apiData.result
+            for (let i = 0; i < posts.length; i++) {
+                if (posts[i].question_image) {
+                    maxImages = maxImages + 1;
+                }
+            }
+            this.setState( {posts: posts, maxImages: maxImages} )
         })
     }
 
     componentDidUpdate() {
         console.log('posts component did an update');
-        var elem = document.querySelector('.row');
+    //     var elem = document.querySelector('.row');
         
-        var msnry = new Masonry( elem, {
-            transitionDuration: '0.2s',
-        });
+    //     var msnry = new Masonry( elem, {
+    //         transitionDuration: '0.2s',
+    //     });
 
-        setTimeout( () => {
-            msnry.layout();
-        }, 50);
-
-        // console.log('elem: ', elem);
-
-        msnry.on( 'layoutComplete', function() {
-            console.log( 'hello complete' );
-        });
-
+    //     setTimeout( () => {
+    //         msnry.layout();
+    //     }, 1000);
     }
-
 
     render() {
 
         return(
             <Switch>
                     <Route path='/posts/:id' render={ (props)=><Post {...this.props} match={props.match}/> } />
-                    <Route path='/posts' render={ ()=><AllPosts posts={this.state.posts}/> } />
+                    <Route path='/posts' render={ ()=><AllPosts posts={this.state.posts} maxImages={this.state.maxImages} />  } />
             </Switch>
         )
     }

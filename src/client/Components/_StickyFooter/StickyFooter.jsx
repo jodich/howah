@@ -7,23 +7,23 @@ export default class StickyFooter extends React.Component {
             <div className="page-footer">
             <div className="container footer">
                 <div className="row grey-text valign-wrapper">
-                    <div className="col l6 s12">
+                    <div className="col m6 s12">
                         <p>cuckooooos birdies</p>
                     </div>
-                    <div className="col l6 s12">
+                    <div className="col m6 s12">
                         <div className="row">
-                        <div className="col l4 right-align">
+                        <div className="col m4 right-align">
                         </div>
-                        <div className="col l2 right-align">
+                        <div className="col m2 right-align">
                             <a href="#"><i className="fa fa-facebook"></i></a>
                         </div>
-                        <div className="col l2 right-align">
+                        <div className="col m2 right-align">
                             <a href="#"><i className="fa fa-twitter"></i></a>
                         </div>
-                        <div className="col l2 right-align">
+                        <div className="col m2 right-align">
                             <a href="#"><i className="fa fa-linkedin"></i></a>
                         </div>
-                        <div className="col l2 right-align">
+                        <div className="col m2 right-align">
                             <a href="#"><i className="fa fa-github"></i></a>
                         </div>
                         </div>

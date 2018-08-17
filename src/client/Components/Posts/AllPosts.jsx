@@ -6,25 +6,43 @@ export default class Posts extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            maxImages: 0,
+            imageCount: 0
+        }
+        this.imageHasLoaded = this.imageHasLoaded.bind(this);
+        this.allImagesLoaded = this.allImagesLoaded.bind(this);
     }
 
     componentDidMount() {
-        console.log('all post did mount');
-
-        // var elem = document.querySelector('.all-posts .row');
-        // var msnry = new Masonry( elem, {
-        //     transitionDuration: '0.2s',
-        // });
+        // console.log('all post did mount');
+    }
+    
+    componentDidUpdate() {
+        // console.log('all post did update');
     }
 
-    componentDidUpdate() {
-        console.log('all post did update');
+    imageHasLoaded() {
+        // console.log('image have loaded')
+        let imageCount = this.state.imageCount;
+        imageCount = imageCount + 1;
 
-        // var elem = document.querySelector('.all-posts .row');
-        // var msnry = new Masonry( elem, {
-        //     transitionDuration: '0.2s',
-        // });
+        if (imageCount == this.props.maxImages) {
+            this.allImagesLoaded(true)
+            this.setState( {imageCount: 0})
+        } else {
+            this.setState( {imageCount: imageCount} )
+        }
+    }
 
+    allImagesLoaded(el) {
+        if (el) {
+            var elem = document.querySelector('.row');
+            var msnry = new Masonry( elem, {
+                transitionDuration: '0.2s',
+                horizontalOrder: true
+            });
+        }
     }
 
     render() {
@@ -33,7 +51,7 @@ export default class Posts extends React.Component {
         var allPosts = posts.map( (post, index) => {
             
             if (post.question_image) {
-                var image = <img src={post.question_image}/>
+                var image = <img src={post.question_image} onLoad={this.imageHasLoaded}/>
             }
 
             return (
