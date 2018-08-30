@@ -24,7 +24,7 @@ if( process.env.DATABASE_URL ){
 		user: 'jodich',
 	  	host: '127.0.0.1',
 	  	database: 'howah',
-		port: 5432
+		  port: 5432
     };
 
 }
