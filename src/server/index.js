@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const {resolve} = require('path');
 const fallback = require('express-history-api-fallback');
 const cloudinary = require('cloudinary');
+const path = require('path');
 
 console.log('the process environment is:', process.env.NODE_ENV)
 
@@ -35,11 +36,18 @@ cloudinary.config({
 
 // const clientBuildPath = resolve(__dirname, '..', '..', 'public');
 // app.use('/app', express.static(clientBuildPath));
-app.get('/app/*', (req, res) => res.sendFile(resolve(__dirname, '..', '..', 'dist', 'index.html')));
+// app.get('/app/*', (req, res) => res.sendFile(resolve(clientBuildPath, 'index.html')));
+
+app.use(express.static(__dirname));
 
 require('./routes')(app);
 
-// app.use(fallback(resolve(__dirname, '..', '..', 'dist')));
+// send the user to index html page inspite of the url
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'index.html'));
+});
+
+// app.use(fallback(resolve(__dirname, '..', '..', 'public/index.html')));
 
 // const server = app.listen(3000, () => { console.log('listening on port 3000')});
 const server = app.listen(process.env.PORT || 3000, () => { console.log('listening on port 3000')})
