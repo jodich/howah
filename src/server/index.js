@@ -40,14 +40,11 @@ cloudinary.config({
 
 app.use(express.static(__dirname));
 
-// require('./routes')(app);
+require('./routes')(app);
 
 // send the user to index html page inspite of the url
 app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, 'index.html'));
-var list = ["item1", "item2", "item3"];
-    res.json(list);
-    console.log('Sent list of items');
+    res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 
 // app.use(fallback(resolve(__dirname, '..', '..', 'public/index.html')));
