@@ -25,7 +25,7 @@ export default class Posts extends React.Component {
     componentDidMount() {
         console.log('posts component mounted')
         let maxImages = this.state.maxImages
-        fetch('/api/posts')
+        fetch(`/api/posts`)
         .then(apiResponse => apiResponse.json())
         .then(apiData => {
             let posts = apiData.postsArr
@@ -35,7 +35,7 @@ export default class Posts extends React.Component {
                     maxImages = maxImages + 1;
                 }
             }
-            this.setState( {posts: posts, maxImages: maxImages} )
+            this.setState( {posts} )
         })
     }
 
