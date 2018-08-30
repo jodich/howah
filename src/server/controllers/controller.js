@@ -78,7 +78,7 @@ const postNewPost = (req, res) => {
         for (key in optionObj) {
             let content = optionObj[key][0];
             let image = optionObj[key][1];
-            let data = `(${resPostId}, \"${content}\", \"${image}\")`
+            let data = `(${resPostId}, \'${content}\', \'${image}\')`
             dataArr.push(data)
         }
         let values = dataArr.join(', ');
