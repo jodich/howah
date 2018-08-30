@@ -1,6 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
+
+// process.env.NODE_ENV == 'production' ? 
+//     require('../../configs/webpack.dev.config') : 
+//     require('../../configs/webpack.prod.config')
+
 module.exports = {
     entry: {
         server: './src/server/index.js',
@@ -8,7 +13,7 @@ module.exports = {
     output: {
         publicPath: '/',
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, '..', 'dist')
     },
     target: 'node',
     node: {

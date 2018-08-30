@@ -1,15 +1,18 @@
-const path = require("path")
-const webpack = require('webpack')
-const HtmlWebPackPlugin = require("html-webpack-plugin")
+const path = require("path");
+const webpack = require('webpack');
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+
+
 module.exports = {
     entry: {
-        main: './src/client/index.jsx'
+        main: [ 'webpack/hot/dev-server', 'webpack-hot-middleware/client', './src/client/index.jsx' ]
     },
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, '..', 'dist'),
         publicPath: '/',
         filename: '[name].js'
     },
+    mode: 'development',
     target: 'web',
     devtool: '#source-map',
     module: {
@@ -26,14 +29,14 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx']å
+        extensions: ['*', '.js', '.jsx']
     },
     plugins: [
         new HtmlWebPackPlugin({
             template: "./public/index.html",
-            filename: "./index.html",
-            excludeChunks: ['server']
-        })
+            filename: "./index.html"
+        }),
+        new webpack.HotModuleReplacementPlugin(),
     ]
 }
 
