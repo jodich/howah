@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const IS_DEV = process.env.NODE_ENV !== 'production';
+const path = require('path');
 
 module.exports = {
     target: 'web',
@@ -40,16 +41,17 @@ module.exports = {
         extensions: ['*', '.js', '.jsx']
     },
     output: {
-        path: `${__dirname}/dist`,
         publicPath: '/',
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
     },
     plugins: [new ExtractTextPlugin({
         filename: '[name].css',
         disable: IS_DEV
-        }), 
-      new webpack.HotModuleReplacementPlugin()],
+    }), 
+    new webpack.HotModuleReplacementPlugin()],
     devServer: {
         hot: true
     }
 }
+

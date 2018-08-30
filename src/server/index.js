@@ -26,7 +26,7 @@ cloudinary.config({
     cloud_name: 'db2fpatds', 
     api_key: '491492416143532', 
     api_secret: 'UhXNYUV93GaYh_h0kONJYI0H61I'
-  });
+});
 
 // const clientBuildPath = resolve(__dirname, '..', '..', 'public');
 // app.use('/app', express.static(clientBuildPath));
@@ -34,5 +34,11 @@ cloudinary.config({
 
 require('./routes')(app);
 
-app.use(fallback(resolve(__dirname, '..', '..', 'public/index.html')));
-const server = app.listen(3000, () => { console.log('listening on port 3000')});
+// app.use(fallback(resolve(__dirname, '..', '..', 'public/index.html')));
+
+// const server = app.listen(3000, () => { console.log('listening on port 3000')});
+
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => {
+  console.log(`Mixing it up on port ${PORT}`)
+})

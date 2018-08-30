@@ -11,13 +11,14 @@ const selectCategories = (req, res) => {
 
 const selectPosts = (req, res) => {
 
-    let selectPosts = "SELECT * FROM posts WHERE current_timestamp < deadline"
+    let selectPosts = `SELECT * FROM posts WHERE current_timestamp < deadline`;
     // let selectPosts = "SELECT *, AGE(deadline, current_timestamp::timestamp(0)) FROM posts WHERE current_timestamp < deadline ORDER BY age"    
     db.query(selectPosts, (err, result) => {
         if (err) {
-            console.log(err)
+            console.log(err);
         }
-        res.json( {result: result.rows} )
+        console.log(result.rows)
+        res.json( {postsArr: result.rows} );
     });
 }
 
@@ -78,7 +79,7 @@ const postNewPost = (req, res) => {
         for (key in optionObj) {
             let content = optionObj[key][0];
             let image = optionObj[key][1];
-            let data = `(${resPostId}, \'${content}\', \'${image}\')`
+            let data = `(${resPostId}, \"${content}\", \"${image}\")`
             dataArr.push(data)
         }
         let values = dataArr.join(', ');

@@ -28,7 +28,8 @@ export default class Posts extends React.Component {
         fetch('/api/posts')
         .then(apiResponse => apiResponse.json())
         .then(apiData => {
-            let posts = apiData.result
+            let posts = apiData.postsArr
+            console.log(posts)
             for (let i = 0; i < posts.length; i++) {
                 if (posts[i].question_image) {
                     maxImages = maxImages + 1;
