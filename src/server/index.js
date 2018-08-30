@@ -11,6 +11,7 @@ const fallback = require('express-history-api-fallback');
 const cloudinary = require('cloudinary');
 
 app.use(webpackDevMiddleware(compiler, {
+    // publicPath: webpackConfig.output.publicPath,
     stats: {
         colors: true
     }
@@ -34,7 +35,7 @@ cloudinary.config({
 
 require('./routes')(app);
 
-// app.use(fallback(resolve(__dirname, '..', '..', 'public/index.html')));
+app.use(fallback(resolve(__dirname, '..', '..', 'public/index.html')));
 
 // const server = app.listen(3000, () => { console.log('listening on port 3000')});
 const server = app.listen(process.env.PORT || 3000, () => { console.log('listening on port something')})

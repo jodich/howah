@@ -17,7 +17,6 @@ const selectPosts = (req, res) => {
         if (err) {
             console.log(err);
         }
-        console.log(result.rows)
         res.json( {postsArr: result.rows} );
     });
 }
