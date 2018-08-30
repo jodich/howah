@@ -75,7 +75,7 @@ const postNewPost = (req, res) => {
         let insertOptions = "INSERT INTO options (post_id, option, option_image) VALUES "
         let resPostId = result.rows[0].id;
         let dataArr = []
-        for (key in optionObj) {
+        for (let key in optionObj) {
             let content = optionObj[key][0];
             let image = optionObj[key][1];
             let data = `(${resPostId}, \'${content}\', \'${image}\')`
