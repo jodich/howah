@@ -40,7 +40,7 @@ cloudinary.config({
 
 app.use(express.static(__dirname));
 
-require('./routes')(app);
+// require('./routes')(app);
 
 // send the user to index html page inspite of the url
 app.get('*', (req, res) => {
