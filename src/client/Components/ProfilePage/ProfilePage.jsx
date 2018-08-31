@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './style.scss'
 import { Redirect } from 'react-router-dom'
 import {Zoom} from 'react-reveal';
+import { Link } from 'react-router-dom'
 
 
 export default class ProfilePage extends React.Component {
@@ -11,7 +12,7 @@ export default class ProfilePage extends React.Component {
             userPosts: [],
             postLength: 0,
             hasMore: true,
-            sortBy: 'recent'
+            sortBy: 'none'
         }
         this.sortByQuery = this.sortByQuery.bind(this)
         window.onscroll = () => {
@@ -21,7 +22,6 @@ export default class ProfilePage extends React.Component {
               window.innerHeight + document.documentElement.scrollTop
               === document.documentElement.offsetHeight
             ) {
-                console.log('reached max')
                 this.loadMore()
             }
         };
@@ -31,28 +31,15 @@ export default class ProfilePage extends React.Component {
         this.loadMore()
     }
 
-    componentDidUpdate() {
-        console.log('profile did an upate')
-        console.log(this.state);
-    }
-
     loadMore = ()  => {
 
-        let {userPosts, postLength, hasMore, sortBy} = this.state
-        console.log('before fetch', postLength)
+        let {postLength, hasMore, sortBy} = this.state
         postLength = postLength + 10;
 
         fetch(`/api/userposts?length=${postLength}&sortby=${sortBy}`)
         .then(apiResponse => apiResponse.json())
         .then(apiData => {
-            
-            if (apiData.posts.length < postLength) {
-                hasMore = false;
-            } else {
-                hasMore = true;
-            }
-            
-            console.log('new post length', postLength)
+            hasMore = apiData.posts.length < postLength ? false : true
             this.setState({userPosts: apiData.posts, postLength: postLength, hasMore: hasMore})
         })
     }
@@ -84,11 +71,13 @@ export default class ProfilePage extends React.Component {
                 <div className="card headline" >
                     <div className="card-content">
                         <span className="card-title">{post.title}</span>
-                        {index}<br/>
                         {post.question}<br/>
                         deadline<br/>
                         date: {date}<br/>
                         time: {time}
+                    </div>
+                    <div class="card-action">
+                    <Link to={`/posts/${post.id}`}>See More</Link>
                     </div>
                 </div>
                 </Zoom>

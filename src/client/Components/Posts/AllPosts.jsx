@@ -14,14 +14,6 @@ export default class Posts extends React.Component {
         this.allImagesLoaded = this.allImagesLoaded.bind(this);
     }
 
-    componentDidMount() {
-        // console.log('all post did mount');
-    }
-    
-    componentDidUpdate() {
-        // console.log('all post did update');
-    }
-
     imageHasLoaded() {
         // console.log('image have loaded')
         let imageCount = this.state.imageCount;

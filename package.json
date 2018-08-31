@@ -9,7 +9,8 @@
     "buildDev": "rm -rf dist && webpack --mode development --config configs/webpack.server.config.js && webpack --mode development --config configs/webpack.dev.config.js",
     "buildProd": "rm -rf dist && webpack --mode production --config configs/webpack.server.config.js && webpack --mode production --config configs/webpack.prod.config.js",
     "start": "node ./dist/server.js",
-    "devStart": "npm run buildDev && npm start"
+    "devStart": "npm run buildDev && npm start",
+    "prodStart": "npm run buildProd && npm start"
   },
   "keywords": [],
   "author": "",
