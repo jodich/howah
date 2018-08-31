@@ -50,7 +50,39 @@ const postUserLogin = (req, res) => {
     })
 }
 
+const selectUserPosts = (req, res) => {
+
+    let userId = req.cookies['user_id'];
+    let dataLength = req.query.length;
+
+    let dataSortBy = req.query.sortby;
+
+    let findUserPost = '';
+    switch (dataSortBy) {
+        case 'recent':
+            findUserPost = "SELECT * FROM posts WHERE author_id = $1 ORDER BY id DESC LIMIT $2";
+            break;
+        case 'open':
+            findUserPost = "SELECT * FROM posts WHERE author_id = $1 AND current_timestamp < deadline ORDER BY id DESC LIMIT $2";
+            break;
+        case 'closed':
+            findUserPost = "SELECT * FROM posts WHERE author_id = $1 AND current_timestamp > deadline ORDER BY id DESC LIMIT $2";
+            break;
+        default:
+            findUserPost = "SELECT * FROM posts WHERE author_id = $1 ORDER BY id ASC LIMIT $2";
+    }
+
+    let values = [userId, dataLength]
+    db.query(findUserPost, values, (err, result) => {
+        if (err) {
+            console.log(err)
+        }
+        res.json({posts: result.rows});
+    });
+}
+
 module.exports = {
     postNewUser,
-    postUserLogin
+    postUserLogin,
+    selectUserPosts
 };

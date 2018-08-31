@@ -18,6 +18,8 @@ module.exports = (app) => {
     app.get("/api/posts/:id", controllers.selectSpecificPost);
     
     app.get("/api/posts", controllers.selectPosts);
+    
+    app.get("/api/userposts", userControllers.selectUserPosts);
 
     app.post("/api/submit-new-post", controllers.postNewPost);
 

@@ -14,14 +14,6 @@ export default class Posts extends React.Component {
         }
     }
 
-    // async getImages() {
-    //     console.log('helloooooooooo');
-    //     const response = await fetch('/api/posts');
-    //     const data = await response.json();
-    //     console.log('byeeeeeeeee');
-    //     return data.result 
-    // }
-
     componentDidMount() {
         console.log('posts component mounted')
         let maxImages = this.state.maxImages

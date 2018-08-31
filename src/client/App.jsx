@@ -15,8 +15,8 @@ export default class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            loggedIn: false,
-            user: null,
+            loggedIn: true,
+            user: {id: 1, user_name: "Jodi", email: "jodi_choo@hotmail.com", password: "c14758dbf2d47ec5511fa42ca83f88d04ad78c5cb27990114b372baea8869753"},
             redirectLogin: false
         };
         this.loginHandler = this.loginHandler.bind(this)
@@ -45,11 +45,11 @@ export default class App extends React.Component {
         return (
 
         [
-            <header>
+            <header key="h">
                 <NavBar loggedIn={this.state.loggedIn} logoutHandler={this.logoutHandler} />
             </header>,
 
-            <main>
+            <main key="m">
                 <Switch>
                     {/* Public Routes */}
                     <Route exact path='/' render={()=><Home />}/>
@@ -64,7 +64,7 @@ export default class App extends React.Component {
                 </Switch>
             </main>,
             
-            <footer>
+            <footer key="f">
                 <StickyFooter/>
             </footer>
         ]
