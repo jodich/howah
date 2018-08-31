@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import {Zoom} from 'react-reveal';
+
 
 
 export default class Posts extends React.Component {
@@ -47,6 +49,7 @@ export default class Posts extends React.Component {
             }
 
             return (
+                <Zoom duration={500} key={index}>
                 <div className="col s12 m3" key={index}>
                 <Link to={"/posts/" + post.id} >
                 <div className="card">
@@ -60,6 +63,7 @@ export default class Posts extends React.Component {
                 </div>
                 </Link>
                 </div>
+                </Zoom>
 
             )
         })

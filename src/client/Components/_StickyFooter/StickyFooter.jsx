@@ -4,7 +4,7 @@ import styles from './style.scss';
 export default class StickyFooter extends React.Component {
     render() {
         return(
-            <div className="page-footer">
+            <div className="page-footer white">
             <div className="container footer">
                 <div className="row grey-text valign-wrapper">
                     <div className="col m6 s12">

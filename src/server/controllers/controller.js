@@ -13,7 +13,6 @@ const selectPosts = (req, res) => {
     
     let selectPosts = `SELECT * FROM posts WHERE current_timestamp < deadline ORDER BY id LIMIT $1`;
     let value = [parseInt(req.query.limit)]
-    console.log(value)
     // let selectPosts = "SELECT *, AGE(deadline, current_timestamp::timestamp(0)) FROM posts WHERE current_timestamp < deadline ORDER BY age"    
     db.query(selectPosts, value, (err, result) => {
         if (err) {

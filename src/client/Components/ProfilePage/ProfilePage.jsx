@@ -44,13 +44,19 @@ export default class ProfilePage extends React.Component {
         })
     }
 
-    sortByQuery = (query) => {
+    sortByQuery = (query, event) => {
         fetch(`/api/userposts?length=10&sortby=${query}`)
         .then(apiResponse => apiResponse.json())
         .then(apiData => {
                 this.setState({userPosts: [], sortBy: query, hasMore: true, postLength: 0});
                 this.loadMore();
         })
+
+        if (document.querySelectorAll('.active')[0]) {
+            document.querySelectorAll('.active')[0].classList.remove('active');
+        }
+
+        event.target.classList.toggle('active');
     } 
 
     render() {
@@ -76,7 +82,7 @@ export default class ProfilePage extends React.Component {
                         date: {date}<br/>
                         time: {time}
                     </div>
-                    <div class="card-action">
+                    <div className="card-action">
                     <Link to={`/posts/${post.id}`}>See More</Link>
                     </div>
                 </div>
@@ -86,30 +92,29 @@ export default class ProfilePage extends React.Component {
 
 
         return(
-            <div className="container">
+            <div className="container profile">
                 <div className="row">
-                    <div className="col s12 m12">
-                        <p>Profile Page</p>
-                        <div className="card horizontal">
-                        <div className="card-image">
-                            <img height="130" src="https://www.incipioworks.com/wp-content/uploads/2015/07/profile-picture-placeholder.png" />
-                        </div>
-                        <div className="card-stacked">
+                    <div className="col m4">
+                        <div className="card">
+                            <div className="card-image">
+                            <img src="https://www.incipioworks.com/wp-content/uploads/2015/07/profile-picture-placeholder.png" />
+                            <span className="card-title">{user.user_name}</span>
+                            </div>
                             <div className="card-content">
                             <p>{user.user_name}</p>
                             <p>{user.email}</p>
                             </div>
                         </div>
-                        </div>
-                    </div>
-                    <div className="col m4">
-                            <div className="collection">
-                                <div onClick={() => this.sortByQuery('recent')} className="collection-item">Recent</div>
-                                <div onClick={() => this.sortByQuery('open')} className="collection-item">Open</div>
-                                <div onClick={() => this.sortByQuery('closed')} className="collection-item">Closed</div>
-                            </div>
                     </div>
                     <div className="col m8">
+                    <div className="card">
+                        <ul class="tabs">
+                            <li class="tab col s3" onClick={(event) => this.sortByQuery('recent', event)}><a href="#default" className="active" >Recent</a></li>
+                            <li class="tab col s3" onClick={(event) => this.sortByQuery('oldest first', event)}><a href="#old">Oldest</a></li>
+                            <li class="tab col s3" onClick={(event) => this.sortByQuery('open', event)}><a href="#open">Open</a></li>
+                            <li class="tab col s3" onClick={(event) => this.sortByQuery('closed', event)}><a href="#closed">Closed</a></li>
+                        </ul>
+                    </div>
                         {allUserPost}
                     </div>
                 </div>

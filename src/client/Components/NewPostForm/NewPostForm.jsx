@@ -218,11 +218,11 @@ export default class NewPostForm extends React.Component {
                         <textarea id="question" className="materialize-textarea validate" onChange={this.changeHandler} required></textarea>
                         <label htmlFor="question">Question</label>
                         </div>
-                        <div class="file-field input-field col s12">
-                            <div class="btn">
+                        <div className="file-field input-field col s12">
+                            <div className="btn">
                                 <span>Question Image</span><input id="qnImg" type="file" onChange={this.changeFileHandler} />
                             </div>
-                            <div class="file-path-wrapper">
+                            <div className="file-path-wrapper">
                                 <input className="file-path" type="text" placeholder="optional"/>
                                 <span id="qnImg_status" class="helper-text"></span>
                             </div>
