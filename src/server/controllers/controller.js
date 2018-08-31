@@ -149,6 +149,38 @@ const postImage = (req, res) => {
     }).end(req.file.buffer)
 }
 
+const postNewComment = (req, res) => {
+
+    let { commentInput, userId } = req.body;
+    let postId = req.params.id;
+
+    let insertNewComment = `INSERT INTO comments (content, author_id, post_id) VALUES ($1, $2, $3) RETURNING *`;
+    let values = [commentInput, userId, postId];
+
+    db.query(insertNewComment, values, (err, result) => {
+        if (err) {
+            console.log(err)
+        }
+        res.json( {newComment: result.rows[0]} );
+    })
+}
+
+const loadComments = (req, res) => {
+
+    let postId = req.params.id;
+    
+    // let selectComments = "SELECT * FROM comments WHERE post_id = $1 ORDER BY id DESC";
+    let selectComments = "SELECT comments.*, users.user_name, users.email FROM comments INNER JOIN users ON (users.id = comments.author_id) WHERE comments.post_id = $1 ORDER BY comments.id DESC";
+    let value = [postId];
+
+    db.query(selectComments, value, (err, result) => {
+        if (err) {
+            console.log(err)
+        }
+        res.json( {result: result.rows} )
+    })
+}
+
 
 // EXPORT controllers
 module.exports = {
@@ -157,5 +189,7 @@ module.exports = {
     selectSpecificPost,
     postNewPost,
     voting,
-    postImage
+    postImage,
+    postNewComment,
+    loadComments
 };

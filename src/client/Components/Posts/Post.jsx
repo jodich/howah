@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
+import Comments from '../Comments/Comments'
 
 export default class Post extends React.Component {
     constructor(props) {
@@ -18,7 +20,6 @@ export default class Post extends React.Component {
         // console.log('post component did mount')
 
         let postId = this.props.match.params.id;
-
         let url = `/api/posts/${postId}`
 
         fetch(url)
@@ -149,12 +150,12 @@ export default class Post extends React.Component {
 
         return(
             <div className="container posts">
-            <div key="back-1" className="row post">
+            <div className="row post">
                 <div className="col s12 m10 offset-m1 center">
                     <Link to="/posts">Back</Link>
                 </div>
             </div>
-            <div key="qn" className="row post">
+            <div className="row post">
                 <div className="col s12 m10 offset-m1">
                     <p className="center-align">Title: {post.title}</p>
                     <h6>Question:</h6>
@@ -162,7 +163,7 @@ export default class Post extends React.Component {
                     <div className="question">{post.question}</div>
                 </div>
             </div>
-            <div key="bulk" className="row post">
+            <div className="row post">
                 <div className="col s12 m6 offset-m1 options">
                     {errMessage}
                     {allOptions}
@@ -172,7 +173,13 @@ export default class Post extends React.Component {
                     {duration}
                 </div>
             </div>
-            <div key="back-2" className="row post">
+            <div className="row post">
+                <div className="col s12 m10 offset-m1 center">
+                    <Link to="/posts">Back</Link>
+                </div>
+            </div>
+            <Comments post={this.state.post} user={this.props.user} loggedIn={this.props.loggedIn}/>
+            <div className="row post">
                 <div className="col s12 m10 offset-m1 center">
                     <Link to="/posts">Back</Link>
                 </div>
