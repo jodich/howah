@@ -121,10 +121,10 @@ export default class Post extends React.Component {
             } else {
                 optionContent = 
                 <span>
-                    <div className="col s12 m4 ">
+                    <div className="col s12 m12 ">
                         <img className="materialboxed" src={option.option_image} />
                     </div>
-                    <div className="col s12 m8 ">
+                    <div className="col s12 m12 ">
                         {option.option}
                     </div>
                 </span>

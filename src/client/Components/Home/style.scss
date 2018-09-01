@@ -3,13 +3,16 @@
     a {
         cursor: default;
     }
+
+    #row-1 {
+        margin-bottom: 0px;
+    }
     
     #row-1 .col {
         background: url('/road_decide.jpg') no-repeat center center ;
         background-size: cover;
         padding: 210px 0px 240px 0px;
         text-align: center;
-        margin-bottom: 20px;
     }
     
     #intro-text-1 {
@@ -76,34 +79,43 @@
 
     // #row-2
     .intro-stuff {
-        // background-color: red;
-        // border: 1px solid #eeeeee;
-        margin-bottom: 100px;
+
+        margin-bottom: 0px;
+        padding-top: 40px;
+        padding-bottom: 40px;
         
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Jua', sans-serif;
-            color: #ffea00;
+            color: #000;
         }
         
         // apply the same effect on all col of #about, #what, #how
-        .col{
-        }        
+        // .col{
+        // }        
     }
-    
-    #about {
-        // to edit a specific col in the row
-        .col:nth-child(3) {
-            background-color: #eeeeee;
-        }
+
+    // .intro-stuff:nth-child(2) {
+    //     // background-color: blue;
+    // }
+    .intro-stuff:nth-child(3) {
+        background-color: #00968899;
     }
-    #what {
-        .col:nth-child(2) {
-            background-color: #eeeeee;
-        }
-    }
-    #how {
-        .col:nth-child(3) {
-            background-color: #eeeeee;
+    .intro-stuff:nth-child(4) {
+
+        .instructions {
+
+            .col {
+                padding: .8rem 1.4rem;
+            }
+            
+            // .col:nth-child(1) {
+            // }
+
+            // .col:nth-child(2) {
+            // }
+
+            // .col:nth-child(3) {
+            // }
         }
     }
 
