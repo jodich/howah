@@ -74,16 +74,13 @@ export default class ProfilePage extends React.Component {
         
             return (
                 <Zoom duration={index == 0 ? 0 : 800} key={index}>
-                <div className="card headline" >
+                <div className="card feed-card" >
                     <div className="card-content">
-                        <span className="card-title">{post.title}</span>
-                        {post.question}<br/>
-                        deadline<br/>
-                        date: {date}<br/>
-                        time: {time}
-                    </div>
-                    <div className="card-action">
-                    <Link to={`/posts/${post.id}`}>See More</Link>
+                        Title: <span className="card-title">{post.title}</span>
+                        <p className="right-align"><i>deadline: </i>{date} {time}</p>
+                        Question:
+                        <p className="post-question">{post.question}</p>
+                        <div className="right-align"><Link to={`/posts/${post.id}`}><div className="z-depth-1 waves-effect waves-light btn">More</div></Link></div>
                     </div>
                 </div>
                 </Zoom>
@@ -95,7 +92,7 @@ export default class ProfilePage extends React.Component {
             <div className="container profile">
                 <div className="row">
                     <div className="col m4">
-                        <div className="card">
+                        <div className="card profile-card">
                             <div className="card-image">
                             <img src="https://www.incipioworks.com/wp-content/uploads/2015/07/profile-picture-placeholder.png" />
                             <span className="card-title">{user.user_name}</span>
@@ -107,7 +104,7 @@ export default class ProfilePage extends React.Component {
                         </div>
                     </div>
                     <div className="col m8">
-                    <div className="card">
+                    <div className="card tabs-card">
                         <ul className="tabs">
                             <li className="tab col s3" onClick={(event) => this.sortByQuery('recent', event)}><a href="#default" className="active" >Recent</a></li>
                             <li className="tab col s3" onClick={(event) => this.sortByQuery('oldest first', event)}><a href="#old">Oldest</a></li>

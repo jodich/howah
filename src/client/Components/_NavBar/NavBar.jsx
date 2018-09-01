@@ -19,14 +19,12 @@ export default class NavBar extends React.Component {
             <nav className="teal">
                 <div className="nav-wrapper">
                     <div className="container">
-                        <Link to='/' className="brand-logo center">HOW AH?</Link>
+                        <Link to='/' className="brand-logo">HOW AH?</Link>
                         <Link to="#" data-target="mobile-nav" className="sidenav-trigger"><i className="material-icons">menu</i></Link>
-                        <ul className="left hide-on-med-and-down">
+                        <ul className="right hide-on-med-and-down">
                             <li><Link to='/'>Home</Link></li>
                             <li><Link to='/posts'>Browse</Link></li>
                             <li><Link to='/new-post'>New Post</Link></li>
-                        </ul>
-                        <ul className="right hide-on-med-and-down">
                             <li><Link to='/profile'>Profile</Link></li>
                             <li><Link to='/signup'>Sign Up</Link></li>
                             <li><Link to='/login'>Log In</Link></li>

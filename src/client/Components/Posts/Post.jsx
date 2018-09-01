@@ -75,7 +75,7 @@ export default class Post extends React.Component {
     }
 
     render() {
-
+        // holder for when the ajax has not been performed yet 
         var {post, options, hasPerformedAjax} = this.state
         if (!hasPerformedAjax) {
             return (
@@ -83,12 +83,14 @@ export default class Post extends React.Component {
             )
         }
 
+        // upon clicking the vote.. what returns?
         if (this.state.message) {
             var errMessage = <div className="message teal">
                                 {this.state.message}
                             </div>
         }
 
+        // setting up the styling for the deadline
         var ageKeys = Object.keys(post.age);
         var duration = ageKeys.map( (key, index) => {
             return(
@@ -103,6 +105,7 @@ export default class Post extends React.Component {
             )
         })
 
+        // setting up the styling for the options
         const allOptions = options.map( (option, index) => {
             var optionContent;
             if (option.option_image == 'null' ) {
@@ -144,6 +147,7 @@ export default class Post extends React.Component {
             )
         });
 
+        // if the post has an image or not
         if (post.question_image) {
             var qnImage = <img className="materialboxed" src={post.question_image} id="qn"/>
         }
@@ -181,7 +185,8 @@ export default class Post extends React.Component {
             <Comments post={this.state.post} user={this.props.user} loggedIn={this.props.loggedIn}/>
             <div className="row post">
                 <div className="col s12 m10 offset-m1 center">
-                    <Link to="/posts">Back</Link>
+                    {/* <Link to="#top">Back</Link><br/> */}
+                    <a href='#'>Back to Top</a>
                 </div>
             </div>
             </div>

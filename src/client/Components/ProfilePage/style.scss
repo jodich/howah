@@ -1,5 +1,11 @@
 .profile {
-    .tabs {
+    
+    .profile-card {
+        // background-color: red;
+    }
+    
+    .tabs-card .tabs {
+        background-color: #f5f5f5;
     
         .active {
             background-color: #fff59d !important;
@@ -12,6 +18,20 @@
 
         a:hover {
             color: #009688;
+        }
+    }
+
+    .feed-card {
+        .card-title {
+            padding-top: 5px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(160,160,160,0.2);
+        }
+        .post-question {
+            padding-bottom: 20px;
+        }
+        .see-more {
+            margin-left: auto
         }
     }
 }

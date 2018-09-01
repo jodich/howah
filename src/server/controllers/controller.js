@@ -161,6 +161,8 @@ const postNewComment = (req, res) => {
     let { commentInput, userId } = req.body;
     let postId = req.params.id;
 
+    if (commentInput == null) return;
+
     let insertNewComment = `INSERT INTO comments (content, author_id, post_id) VALUES ($1, $2, $3) RETURNING *`;
     let values = [commentInput, userId, postId];
 

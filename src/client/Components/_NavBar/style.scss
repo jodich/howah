@@ -3,16 +3,18 @@ nav {
     background-color: #009688 !important;
 
     color: white;
-    font-family: 'PT Sans', sans-serif;
-
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 100;
+    
     ul a {
         color: #fff;
+        font-size: 0.9rem;
     }
 
     .brand-logo {
         color: #ffea00;
         font-family: 'Jua', sans-serif;
-        font-size: 40px;
+        font-size: 30px;
     }
 }
 
