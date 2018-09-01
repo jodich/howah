@@ -17,6 +17,7 @@ export default class App extends React.Component {
         this.state = {
             loggedIn: true,
             user: {id: 1, user_name: "Jodi", email: "jodi_choo@hotmail.com", password: "c14758dbf2d47ec5511fa42ca83f88d04ad78c5cb27990114b372baea8869753"},
+            // user: null,            
             redirectLogin: false
         };
         this.loginHandler = this.loginHandler.bind(this)

@@ -1,5 +1,7 @@
 import React from 'react';
-import styles from './style.scss'
+import styles from './style.scss';
+import {Zoom} from 'react-reveal';
+import { Link } from 'react-router-dom'
 
 
 export default class Comments extends React.Component {
@@ -9,12 +11,25 @@ export default class Comments extends React.Component {
             allComments: [],
             commentInput: null,
 
-            userId: null
+            userId: null,
+
+            commentsLength: 0,
+            hasMore: true,
         }
         this.changeHandler = this.changeHandler.bind(this);
-        this.submitHandler = this.submitHandler.bind(this)
-        this.loadComments = this.loadComments.bind(this)
+        this.submitHandler = this.submitHandler.bind(this);
+        this.loadComments = this.loadComments.bind(this);
 
+        window.onscroll = () => {
+            if (!this.state.hasMore) return;
+
+            if (
+              window.innerHeight + document.documentElement.scrollTop
+              === document.documentElement.offsetHeight
+            ) {
+                this.loadComments()
+            }
+        };
     }
 
     componentDidMount() {
@@ -30,11 +45,14 @@ export default class Comments extends React.Component {
     // }
 
     loadComments() {
-        fetch(`/api/posts/${this.props.post.id}/comments`)
+        let {commentsLength, hasMore} = this.state
+        commentsLength = commentsLength + 10;
+        
+        fetch(`/api/posts/${this.props.post.id}/comments?length=${commentsLength}`)
         .then(apiResponse => apiResponse.json())
         .then(apiData => {
-            console.log(apiData.result)
-            this.setState({ allComments: apiData.result});
+            hasMore = apiData.result.length < commentsLength ? false : true
+            this.setState({ allComments: apiData.result, commentsLength: commentsLength, hasMore: hasMore});
         })
     }
 
@@ -68,6 +86,24 @@ export default class Comments extends React.Component {
 
     render() {
 
+        if (this.props.loggedIn) {
+            var commentForm = 
+            <form id="commentForm" onSubmit={this.submitHandler}>
+                <div className="input-field col s12 m2">
+                    <button className="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+                </div>
+                <div className="input-field col s12 m10">
+                    <textarea id="commentInput" className="materialize-textarea validate" onChange={this.changeHandler}></textarea>
+                    <label htmlFor="commentInput">Comment</label>
+                </div>
+            </form>
+        } else {
+            var commentForm = 
+            <div className="col s12">
+                <div className="notloggedin">Must be <Link to="/login">logged in</Link> to comment</div>
+            </div>
+        }
+
         const allComments = this.state.allComments.map( (comment, index) => {
 
             let createdDated = comment.created_at.split('.')
@@ -75,12 +111,13 @@ export default class Comments extends React.Component {
             let time = createdDated[0].split('T')[1].slice(0, 5)
 
             return (
+                <Zoom duration={300} key={index}>
                 <div className="col s12">
                     <div className="card">
                     <div className="card-content">
                         <p>{comment.content}</p>
 
-                        <p className="right-align">
+                        <p className="right-align grey-text text-lighten-1">
                             <i>Posted By:</i> {comment.user_name} ({comment.email})<br/>
                             <i>on</i> {time} {date}
                         </p>
@@ -88,22 +125,15 @@ export default class Comments extends React.Component {
                     </div>
                     </div>
                 </div>
+                </Zoom>
             )
         })
 
         return(
         <div className="row comments">
             <div className="col s12 m10 offset-m1">
-                <h6 className="center">comments</h6>
-                <form id="commentForm" onSubmit={this.submitHandler}>
-                    <div className="input-field col s12 m2">
-                        <button className="btn waves-effect waves-light" type="submit" name="action">Submit</button>
-                    </div>
-                    <div className="input-field col s12 m10">
-                        <textarea id="commentInput" className="materialize-textarea validate" onChange={this.changeHandler}></textarea>
-                        <label htmlFor="commentInput">Comment</label>
-                    </div>
-                </form>
+                <h6 className="center">Comments</h6>
+                    {commentForm}
 
                     {allComments}
             </div>

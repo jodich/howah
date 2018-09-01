@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS options;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS likes;
-DROP TABLE IF EXISTS categories;
+-- DROP TABLE IF EXISTS categories;
 
 CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS posts (
   question TEXT NOT NULL,
   question_image TEXT,
   author_id INTEGER,
-  category_id INTEGER,
+  -- category_id INTEGER,
   created_at TIMESTAMP(0) DEFAULT current_timestamp,
   deadline TIMESTAMP(0)
 );
@@ -52,14 +52,14 @@ CREATE TABLE IF NOT EXISTS votes (
   option_id INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS categories (
-  id SERIAL PRIMARY KEY,
-  category_name TEXT NOT NULL
-);
+-- CREATE TABLE IF NOT EXISTS categories (
+--   id SERIAL PRIMARY KEY,
+--   category_name TEXT NOT NULL
+-- );
 
-INSERT INTO categories (category_name) VALUES
-  ('Shopping'),
-  ('Lifestyle'),
-  ('Relationship'),
-  ('Fun and Games'),
-  ('Miscellaneous');
+-- INSERT INTO categories (category_name) VALUES
+--   ('Shopping'),
+--   ('Lifestyle'),
+--   ('Relationship'),
+--   ('Fun and Games'),
+--   ('Miscellaneous');

@@ -12,7 +12,7 @@ export default class ProfilePage extends React.Component {
             userPosts: [],
             postLength: 0,
             hasMore: true,
-            sortBy: 'none'
+            sortBy: 'recent'
         }
         this.sortByQuery = this.sortByQuery.bind(this)
         window.onscroll = () => {
@@ -108,11 +108,11 @@ export default class ProfilePage extends React.Component {
                     </div>
                     <div className="col m8">
                     <div className="card">
-                        <ul class="tabs">
-                            <li class="tab col s3" onClick={(event) => this.sortByQuery('recent', event)}><a href="#default" className="active" >Recent</a></li>
-                            <li class="tab col s3" onClick={(event) => this.sortByQuery('oldest first', event)}><a href="#old">Oldest</a></li>
-                            <li class="tab col s3" onClick={(event) => this.sortByQuery('open', event)}><a href="#open">Open</a></li>
-                            <li class="tab col s3" onClick={(event) => this.sortByQuery('closed', event)}><a href="#closed">Closed</a></li>
+                        <ul className="tabs">
+                            <li className="tab col s3" onClick={(event) => this.sortByQuery('recent', event)}><a href="#default" className="active" >Recent</a></li>
+                            <li className="tab col s3" onClick={(event) => this.sortByQuery('oldest first', event)}><a href="#old">Oldest</a></li>
+                            <li className="tab col s3" onClick={(event) => this.sortByQuery('open', event)}><a href="#open">Open</a></li>
+                            <li className="tab col s3" onClick={(event) => this.sortByQuery('closed', event)}><a href="#closed">Closed</a></li>
                         </ul>
                     </div>
                         {allUserPost}

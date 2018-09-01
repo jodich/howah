@@ -64,8 +64,10 @@ const postNewPost = (req, res) => {
     }
     // // //
 
-    let insertNewPost = "INSERT INTO posts (title, question, question_image, author_id, deadline) VALUES ($1, $2, $3, $4, $5) RETURNING *";
+    let insertNewPost = `INSERT INTO posts (title, question, question_image, author_id, deadline) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
     let values = [title, question, questionImg, userId, deadline];
+    console.log(insertNewPost)
+
 
     db.query(insertNewPost, values, (err, result) => {
         if (err) {
@@ -73,17 +75,22 @@ const postNewPost = (req, res) => {
         }
 
         // FORMATTING INSERT OPTION QUERY
-        let insertOptions = "INSERT INTO options (post_id, option, option_image) VALUES "
+        let insertOptions = `INSERT INTO options (post_id, option, option_image) VALUES `
         let resPostId = result.rows[0].id;
         let dataArr = []
         for (let key in optionObj) {
             let content = optionObj[key][0];
+            if (content.includes('\'')) {
+                console.log('have');
+                let newContent = content.split("\'").join("\'\'")
+                content = newContent
+            }
             let image = optionObj[key][1];
             let data = `(${resPostId}, \'${content}\', \'${image}\')`
             dataArr.push(data)
         }
         let values = dataArr.join(', ');
-        insertOptions = insertOptions + values + ' RETURNING *'
+        insertOptions = insertOptions + values + ` RETURNING *`
         // // //
 
         db.query(insertOptions, (err, result) => {
@@ -168,10 +175,11 @@ const postNewComment = (req, res) => {
 const loadComments = (req, res) => {
 
     let postId = req.params.id;
+    let dataLength = req.query.length;
     
     // let selectComments = "SELECT * FROM comments WHERE post_id = $1 ORDER BY id DESC";
-    let selectComments = "SELECT comments.*, users.user_name, users.email FROM comments INNER JOIN users ON (users.id = comments.author_id) WHERE comments.post_id = $1 ORDER BY comments.id DESC";
-    let value = [postId];
+    let selectComments = "SELECT comments.*, users.user_name, users.email FROM comments INNER JOIN users ON (users.id = comments.author_id) WHERE comments.post_id = $1 ORDER BY comments.id DESC LIMIT $2";
+    let value = [postId, dataLength];
 
     db.query(selectComments, value, (err, result) => {
         if (err) {
