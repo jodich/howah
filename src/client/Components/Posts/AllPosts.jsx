@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {Zoom} from 'react-reveal';
-
+import Zoom from 'react-reveal/Zoom';
 
 
 export default class Posts extends React.Component {

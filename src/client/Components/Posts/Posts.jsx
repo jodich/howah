@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './style.scss'
-import { Switch, Route, Link } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import AllPosts from './AllPosts.jsx'
 import Post from './Post.jsx'
 

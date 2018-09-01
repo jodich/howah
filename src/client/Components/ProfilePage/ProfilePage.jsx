@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './style.scss'
 import { Redirect } from 'react-router-dom'
-import {Zoom} from 'react-reveal';
+import Zoom from 'react-reveal/Zoom';
 import { Link } from 'react-router-dom'
 
 
